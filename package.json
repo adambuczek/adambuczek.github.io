@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "buld": "gulp",
+    "develop": "gulp develop",
     "test": "jest --watch *.test.js"
   },
   "author": "",
