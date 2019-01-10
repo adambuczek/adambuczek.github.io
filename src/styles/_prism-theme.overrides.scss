@@ -1,0 +1,27 @@
+@import 'vars';
+@import 'functions';
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #f8f8f2;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: to-rem(3*8);
+
+  tab-size: 4;
+
+  hyphens: none;
+}
+
+pre[class*="language-"] {
+  padding: to-rem(2*8);
+  margin: to-rem(2*8) 0;
+  overflow: auto;
+  border-radius: 0;
+}

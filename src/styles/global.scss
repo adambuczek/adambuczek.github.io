@@ -1,9 +1,33 @@
+@import 'vars';
+@import 'functions';
+
 * {
   box-sizing: border-box
 }
 
 a {
-  color: forestgreen;
+  color: darkred;
 }
 
-@import 'prism-theme' 
+.date {
+  float: right;
+}
+
+.notes {
+  padding: 0;
+  list-style: none;
+  overflow-x: hidden;
+  position: relative;
+  li::after {
+    content: '.......................................................................................................';
+    position: absolute;
+    z-index: -1;
+    color: lighten($primary-text-color, 50);
+  }
+  .date {
+    background-color: $bg-color;
+  }
+}
+
+@import 'prism-theme';
+@import 'prism-theme.overrides';

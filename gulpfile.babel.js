@@ -18,18 +18,19 @@ const paths = {
     src: 'src',
     dest: 'dist',
 }
-
 paths.styles = {
-    src: [`${paths.src}/styles/**/*.scss`],
+    src: [`${paths.src}/styles/**/*.scss`, `${paths.src}/styles/**/*.css`],
     dest: `${paths.dest}/styles/`,
 }
-
 paths.html = {
     src: `${paths.dest}/**/*.html`,
 }
-
 paths.generate = {
     src: [`${paths.src}/**/*.njk`, `${paths.src}/**/*.md`],
+}
+paths.assets = {
+    src: [`${paths.src}/assets/*.jpeg`],
+    dest: [`${paths.dest}/assets`],
 }
 
 /* Eleventy generator: see .eleventy.js for config */
@@ -51,6 +52,10 @@ const html = () => {
     return gulp.src(paths.html.src)
         .pipe(minifyHTML({ collapseWhitespace: true }))
         .pipe(gulp.dest(file => file._base)) // minify eleventy output in place
+}
+const assets = () => {
+    return gulp.src(paths.assets.src)
+        .pipe(gulp.dest(paths.assets.dest))
 }
 
 /* Critical css inlining */
@@ -87,7 +92,7 @@ const watch = () => {
     gulp.watch(paths.styles.src, styles)
     gulp.watch(paths.generate.src, gulp.series(generate, reload))
 }
-const develop = gulp.series(clean, generate, styles, serve, watch)
+const develop = gulp.series(clean, generate, styles, assets, serve, watch)
 
 export default build
 export { clean, develop, styles }

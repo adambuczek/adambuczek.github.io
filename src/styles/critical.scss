@@ -1,5 +1,71 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500|Roboto+Slab');
+
+@import 'vars';
+@import 'functions';
+
+html {
+  $base-font-size: 16;
+  font-size: #{$base-font-size}px;
+}
+
 body {
-  margin: 50px;
+  font-family: 'Roboto Slab', serif;
   padding: 0;
-  background-color: #fefefe;
+  margin: 0;
+  background-color: $bg-color;
+  color: $primary-text-color;
+  font-size: to-rem(2*8);
+  line-height: to-rem(3*8);
+}
+
+nav {
+  ul {
+    margin: to-rem(2*8);
+    padding: 0;
+  }
+  li {
+    display: inline;
+    margin: 0 1rem;
+  }
+}
+
+main {
+  width: 90%;
+  max-width: 600px;
+  margin: to-rem(6*8) auto;
+}
+
+h1, h2, h3, h4, h5 {
+  color: lighten($primary-text-color, 10);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+}
+
+h1 {
+  margin: to-rem(2*8) 0;
+  font-size: to-rem(4*8);
+  line-height: to-rem(5*8);
+}
+
+h2 {
+  margin: to-rem(4*8) 0 to-rem(2*8);
+  font-size: to-rem(3*8);
+  line-height: to-rem(4*8);
+  font-weight: 500;
+}
+
+p, ul {
+  margin: to-rem(2*8) 0;
+  font-size: to-rem(2*8);
+  line-height: to-rem(3*8);
+  code {
+    color: #550000;
+    // prevent inline code blocks from messing up the baseline grid
+    line-height: to-rem(1*8);
+  }
+}
+
+ul {
+  padding: 0 0 0 to-rem(2*8);
+  list-style: square;
 }

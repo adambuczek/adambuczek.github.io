@@ -28,16 +28,17 @@ And a jest tests:
 * and 0 function variant which returns a function returning first passed argument
 ```js
 describe('composing functions', () => {
-    test('should return the same value as 3 nested functions', () => {
+    test('return the same value as 3 funcs', () => {
         const data = [1, 2, 3, 4, 5] 
-        expect(compose(add5, mult2, sum)(data)).toBe(add5(mult2(sum(data))))
+        expect(compose(add5, mult2, sum)(data))
+            .toBe(add5(mult2(sum(data))))
     })
-    test('should return the same value as 1 nested function', () => {
+    test('return the same value as 1 fn', () => {
         const data = [1, 2, 3, 4, 5] 
         expect(compose(sum)(data)).toBe(sum(data))
         expect(compose(pow)(2,4)).toBe(sum(pow(2,4)))
     })
-    test('should return the first argument when composing 0 fns', () => {
+    test('return 1st argument given 0 fns', () => {
         expect(compose()('whatever', 1)).toBe('whatever')
     })
 })
@@ -67,8 +68,10 @@ Saving intermediate values and returning only the accumulated, final value canbe
 
 ReduceRight implementation
 ---
-Reversing the `funcs` array can be avoided with `reduceRight` processing an array from back to front.  
+Reversing the `funcs` array can be avoided with `reduceRight` processing an array from back to front.
+
 Being able to compose functions accepting multiple arguments up front means operating on argument arrays. Call to the rightmost (1st) function uses spread operator `fn(...acc)`.
+
 When `initialValue` is ommited `reduceRight` passes two last functions on first loop and starts from penultimate element (`funcs.length - 2`). First iteration applies both functions and spreads initial arguments.
 
 ```js
@@ -83,8 +86,10 @@ const compose = (...funcs) => {
 ```
 Redux implementation
 ---
-Reduces `funcs` array and acumulates functions wrapping each new function in those already iterated over effectively reversing the calling order.  
-It also shows that spreading an array to return its first element `(...args) => args[0]` is redundant when `arg => arg` discard all arguments but the first one.  
+Reduces `funcs` array and acumulates functions wrapping each new function in those already iterated over effectively reversing the calling order.
+
+It also shows that spreading an array to return its first element `(...args) => args[0]` is redundant when `arg => arg` discards all arguments but the first one.
+
 Wrapping single function and passing it its own argument should also be simplified `(...args) => funcs[0](...args)` to `funcs[0]`.
 ```js
 export default function compose(...funcs) {

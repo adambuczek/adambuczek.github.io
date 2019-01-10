@@ -7,15 +7,18 @@
     <title>{{ title }}</title>
   </head>
   <body>
+    <nav>
+      <ul>
+        <li><a href="/notes">Notes</a></li>
+        |
+        <li><a href="/">Adam Buczek</a></li>
+      </ul>
+    </nav>
+    <main role="main">
     {% block content %}
       {{ content | safe }}
-      <h2>Latests notes</h2>
-      <ul>
-        {%- for note in collections.note -%}
-          <li>{{ note.data.title }}</li>
-        {%- endfor -%}
-      </ul>
     {% endblock %}
+    </main>
     <link href="/styles/global.css" rel="stylesheet" type="text/css">
   </body>
 </html>

@@ -1,6 +1,7 @@
 {% extends "index.njk" %}
 
 {% block content %}
+  <span class="date">{{ page.date | formatDate }}</span>
   <h1>{{ title }}</h1>
   {{ content | safe }}
 {% endblock %}
