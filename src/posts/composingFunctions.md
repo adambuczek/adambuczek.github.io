@@ -1,5 +1,9 @@
-Composing Functions
-===
+---
+layout: note.njk
+title: Composing Functions
+tags: 
+ - note
+---
 Take any number of functions and return one that will be applied to passed arguments from right to left. Given functions `a`, `b`, `c` this:
 ```js
 const abc = compose(a, b, c)
