@@ -1,8 +1,9 @@
 @import 'vars';
 @import 'functions';
 
-* {
-  box-sizing: border-box
+body {
+  background-color: $bg-color;
+  color: $primary-text-color;
 }
 
 a {
@@ -27,6 +28,19 @@ a {
   .date {
     background-color: $bg-color;
   }
+}
+
+:not(pre) > code {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  // background: #dadada;
+  color: darkred;
+  word-wrap: break-word;
+  // padding: .1rem .3rem .2rem;
+  // border-radius: .2rem;
+}
+
+ul {
+  list-style: square;
 }
 
 @import 'prism-theme';

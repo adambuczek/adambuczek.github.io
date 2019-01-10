@@ -3,6 +3,10 @@
 @import 'vars';
 @import 'functions';
 
+* {
+  box-sizing: border-box
+}
+
 html {
   $base-font-size: 16;
   font-size: #{$base-font-size}px;
@@ -12,8 +16,6 @@ body {
   font-family: 'Roboto Slab', serif;
   padding: 0;
   margin: 0;
-  background-color: $bg-color;
-  color: $primary-text-color;
   font-size: to-rem(2*8);
   line-height: to-rem(3*8);
 }
@@ -66,7 +68,6 @@ p, ul {
   font-size: to-rem(2*8);
   line-height: to-rem(3*8);
   code {
-    color: #550000;
     // prevent inline code blocks from messing up the baseline grid
     line-height: to-rem(1*8);
   }
@@ -74,7 +75,6 @@ p, ul {
 
 ul {
   padding: 0 0 0 to-rem(2*8);
-  list-style: square;
 }
 
 img {
