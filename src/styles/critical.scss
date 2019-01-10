@@ -54,6 +54,13 @@ h2 {
   font-weight: 500;
 }
 
+h3 {
+  margin: to-rem(2*8) 0 to-rem(2*8);
+  font-size: to-rem(2*8);
+  line-height: to-rem(3*8);
+  font-weight: 500;
+}
+
 p, ul {
   margin: to-rem(2*8) 0;
   font-size: to-rem(2*8);
@@ -68,4 +75,8 @@ p, ul {
 ul {
   padding: 0 0 0 to-rem(2*8);
   list-style: square;
+}
+
+img {
+  max-width: 100%;
 }

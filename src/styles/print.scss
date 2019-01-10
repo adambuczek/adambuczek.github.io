@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500|Roboto+Slab');
+
+@import 'vars';
+@import 'functions';
+
+nav, footer {
+  display: none;
+}
+
+main {
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
+
+@page {
+  margin: 2cm;
+}
+
+h1 {
+  margin: to-rem(2*8) 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+@import 'prism-theme-print';
