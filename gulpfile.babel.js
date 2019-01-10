@@ -8,6 +8,11 @@ import minifyHTML from 'gulp-htmlmin'
 import inlineSource from 'gulp-inline-source'
 import run from 'gulp-run'
 import browserSync from 'browser-sync'
+import sass from 'gulp-sass'
+import purgecss from 'gulp-purgecss'
+
+sass.compiler = require('node-sass')
+
 
 const paths = {
     src: 'src',
@@ -15,7 +20,7 @@ const paths = {
 }
 
 paths.styles = {
-    src: `${paths.src}/styles/*.css`,
+    src: [`${paths.src}/styles/**/*.scss`],
     dest: `${paths.dest}/styles/`,
 }
 
@@ -33,9 +38,13 @@ const generate = () => run('npx eleventy').exec()
 /* Parralel assets pipelines */
 const styles = () => {
     return gulp.src(paths.styles.src, { sourcemaps: true })
+        .pipe(sass().on('error', sass.logError))
+        .pipe(purgecss({
+            content: ['dist/**/*.html']
+        }))
         .pipe(autoprefixer())
         .pipe(minifyCSS())
-        .pipe(gulp.dest(paths.styles.dest))
+        .pipe(gulp.dest(paths.styles.dest, { sourcemaps: '.' }))
         .pipe(browserSync.stream())
 }
 const html = () => {
@@ -43,7 +52,6 @@ const html = () => {
         .pipe(minifyHTML({ collapseWhitespace: true }))
         .pipe(gulp.dest(file => file._base)) // minify eleventy output in place
 }
-const assets = gulp.parallel(styles, html)
 
 /* Critical css inlining */
 const inline = () => {
@@ -74,12 +82,12 @@ const reload = done => {
 }
 
 const clean = () => run(`rm -rf ${paths.dest}`).exec()
-const build = gulp.series(clean, generate, assets, inline)
+const build = gulp.series(clean, generate, html, styles, inline)
 const watch = () => {
     gulp.watch(paths.styles.src, styles)
     gulp.watch(paths.generate.src, gulp.series(generate, reload))
 }
-const develop = gulp.series(clean, gulp.parallel(generate, styles), serve, watch)
+const develop = gulp.series(clean, generate, styles, serve, watch)
 
 export default build
-export { clean, develop }
+export { clean, develop, styles }

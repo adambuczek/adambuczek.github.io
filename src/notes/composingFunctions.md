@@ -84,8 +84,8 @@ const compose = (...funcs) => {
 Redux implementation
 ---
 Reduces `funcs` array and acumulates functions wrapping each new function in those already iterated over effectively reversing the calling order.  
-It also shows that spreading an array just to return its first element `(...args) => args[0]` is redundant when `arg => arg` would do just that simply discarding all arguments but the first one.  
-Wrapping single function and passing it its own argument should also be simplified `(...args) => funcs[0](...args)` to just `funcs[0]`.
+It also shows that spreading an array to return its first element `(...args) => args[0]` is redundant when `arg => arg` discard all arguments but the first one.  
+Wrapping single function and passing it its own argument should also be simplified `(...args) => funcs[0](...args)` to `funcs[0]`.
 ```js
 export default function compose(...funcs) {
   if (funcs.length === 0) {
