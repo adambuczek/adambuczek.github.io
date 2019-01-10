@@ -27,6 +27,10 @@ paths.generate = {
     src: [`${paths.src}/**/*.njk`, `${paths.src}/**/*.md`],
 }
 
+/* Eleventy generator: see .eleventy.js for config */
+const generate = () => run('npx eleventy').exec()
+
+/* Parralel assets pipelines */
 const styles = () => {
     return gulp.src(paths.styles.src, { sourcemaps: true })
         .pipe(autoprefixer())
@@ -34,13 +38,14 @@ const styles = () => {
         .pipe(gulp.dest(paths.styles.dest))
         .pipe(browserSync.stream())
 }
-
 const html = () => {
     return gulp.src(paths.html.src)
         .pipe(minifyHTML({ collapseWhitespace: true }))
         .pipe(gulp.dest(file => file._base)) // minify eleventy output in place
 }
+const assets = gulp.parallel(styles, html)
 
+/* Critical css inlining */
 const inline = () => {
     return gulp.src(paths.html.src)
         .pipe(inlineSource({
@@ -49,17 +54,7 @@ const inline = () => {
         .pipe(gulp.dest(file => file._base)) // minify eleventy output in place
 }
 
-const generate = () => run('npx eleventy').exec()
-const clean = () => run(`rm -rf ${paths.dest}`).exec()
-
-const assets = gulp.parallel(styles, html)
-
-
-const reload = done => {
-    browserSync.reload()
-    done()
-}
-  
+/* Dev Server settings */
 const serve = done => {
     browserSync.init({
         notify: false,
@@ -73,15 +68,18 @@ const serve = done => {
     })
     done()
 }
+const reload = done => {
+    browserSync.reload()
+    done()
+}
 
+const clean = () => run(`rm -rf ${paths.dest}`).exec()
+const build = gulp.series(clean, generate, assets, inline)
 const watch = () => {
     gulp.watch(paths.styles.src, styles)
     gulp.watch(paths.generate.src, gulp.series(generate, reload))
 }
-
-
-const build = gulp.series(clean, generate, assets, inline)
-const develop = gulp.series(clean, generate, serve, watch)
+const develop = gulp.series(clean, gulp.parallel(generate, styles), serve, watch)
 
 export default build
 export { clean, develop }
