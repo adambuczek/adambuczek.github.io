@@ -39,7 +39,9 @@ const generate = () => run('npx eleventy').exec()
 /* Parralel assets pipelines */
 const styles = () => {
     return gulp.src(paths.styles.src, { sourcemaps: true })
-        .pipe(sass().on('error', sass.logError))
+        .pipe(sass({
+            includePaths: `${paths.src}/styles`
+        }).on('error', sass.logError))
         .pipe(purgecss({
             content: ['dist/**/*.html']
         }))

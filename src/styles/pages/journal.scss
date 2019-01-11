@@ -1,0 +1,20 @@
+@import 'includes/vars';
+@import 'includes/functions';
+
+.page--journal {
+  ul {
+    padding: 0;
+    list-style: none;
+    overflow-x: hidden;
+    position: relative;
+    li::after {
+      content: ".......................................................................................................";
+      position: absolute;
+      z-index: -1;
+      color: lighten($primary-text-color, 50);
+    }
+    span {
+      background-color: $bg-color;
+    }
+  }
+}

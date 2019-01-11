@@ -11,24 +11,8 @@ a {
   color: darkred;
 }
 
-.date {
+.float-right {
   float: right;
-}
-
-.notes {
-  padding: 0;
-  list-style: none;
-  overflow-x: hidden;
-  position: relative;
-  li::after {
-    content: '.......................................................................................................';
-    position: absolute;
-    z-index: -1;
-    color: lighten($primary-text-color, 50);
-  }
-  .date {
-    background-color: $bg-color;
-  }
 }
 
 :not(pre) > code {
@@ -55,6 +39,7 @@ ul {
 @import 'includes/footer';
 
 @import 'pages/index';
+@import 'pages/journal';
 
 @import 'includes/prism-theme';
 @import 'includes/prism-theme.overrides';

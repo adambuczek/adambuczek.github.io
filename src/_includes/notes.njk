@@ -2,11 +2,11 @@
 
 {% block content %}
     <h1>{{ title }}</h1>
-      <ul class="notes">
+      <ul>
         {%- for note in collections.note | reverse -%}
           <li>
             <a href="{{ note.url }}">{{ note.data.title }}</a>
-            <span class="date">{{ note.date | formatDate }}</span>
+            <span class="float-right">{{ note.date | formatDate }}</span>
           </li>
         {%- endfor -%}
       </ul>
