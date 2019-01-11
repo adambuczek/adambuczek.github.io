@@ -1,0 +1,28 @@
+footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  
+  ul {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  li {
+    display: inline;
+    margin: 1rem;
+  }
+  img {
+    height: 24px;
+  }
+}
+
+// those rules are footer related
+html {
+  min-height: 100%;
+  position: relative;
+}
+
+main {
+  padding-bottom: 60px;
+}

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500|Roboto+Slab');
 
-@import 'vars';
-@import 'functions';
+@import 'includes/vars';
+@import 'includes/functions';
 
 nav, footer {
   display: none;
@@ -25,4 +25,9 @@ img {
   max-width: 100%;
 }
 
-@import 'prism-theme-print';
+a {
+  text-decoration: none;
+  color: $primary-text-color;
+}
+
+@import 'includes/prism-theme-print';

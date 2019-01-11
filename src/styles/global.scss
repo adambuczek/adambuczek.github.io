@@ -1,5 +1,6 @@
-@import 'vars';
-@import 'functions';
+@import 'includes/vars';
+@import 'includes/functions';
+
 
 body {
   background-color: $bg-color;
@@ -39,9 +40,21 @@ a {
   // border-radius: .2rem;
 }
 
+img {
+  max-width: 100%;
+}
+
 ul {
   list-style: square;
 }
 
-@import 'prism-theme';
-@import 'prism-theme.overrides';
+.dotted-border {
+  border: 1px dotted lighten($primary-text-color, 50);
+}
+
+@import 'includes/footer';
+
+@import 'pages/index';
+
+@import 'includes/prism-theme';
+@import 'includes/prism-theme.overrides';

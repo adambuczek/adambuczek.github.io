@@ -1,0 +1,14 @@
+.page--index {
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  li {
+    flex: 180px;
+  }
+
+
+}

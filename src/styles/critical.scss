@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500|Roboto+Slab');
 
-@import 'vars';
-@import 'functions';
+@import 'includes/vars';
+@import 'includes/functions';
 
 * {
   box-sizing: border-box
@@ -21,13 +21,20 @@ body {
 }
 
 nav {
+  margin: to-rem(2*8) 5%;
   ul {
-    margin: to-rem(2*8);
+    margin: 0;
     padding: 0;
   }
   li {
     display: inline;
     margin: 0 1rem;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+  @media screen and (min-width: 670px) {
+    margin-left: to-rem(2*8);
   }
 }
 
@@ -57,13 +64,13 @@ h2 {
 }
 
 h3 {
-  margin: to-rem(2*8) 0 to-rem(2*8);
+  margin: to-rem(2*8) 0 to-rem(1*8);
   font-size: to-rem(2*8);
   line-height: to-rem(3*8);
   font-weight: 500;
 }
 
-p, ul {
+p, ul, iframe {
   margin: to-rem(2*8) 0;
   font-size: to-rem(2*8);
   line-height: to-rem(3*8);
@@ -75,8 +82,4 @@ p, ul {
 
 ul {
   padding: 0 0 0 to-rem(2*8);
-}
-
-img {
-  max-width: 100%;
 }
