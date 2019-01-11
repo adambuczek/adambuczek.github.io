@@ -9,8 +9,12 @@
     flex-wrap: wrap;
   }
 
-  li {
+  .max-2-col li {
     flex: 200px;
+  }
+
+  .max-3-col li {
+    flex: 150px;
   }
 
 

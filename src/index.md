@@ -8,6 +8,8 @@ I’m Adam Buczek, a front end developer. This is my online resume.
 
 Skills
 ---
+<span class="max-3-col">
+
 - HTML5
 - CSS3 & Sass
 - ES6+
@@ -20,13 +22,19 @@ Skills
 - gulp
 - Docker
 - bash
+- 
+</span>
 
 Also:
+
+<span class="max-3-col">
+
 - Photoshop
 - Illustrator
 - Inkscape
 - InDesign
 
+</span>
 
 Experience
 ---
@@ -59,7 +67,11 @@ Native Polish speaker, fluent in English, working knowledge of Spanish.
 
 Interests
 ---
+<span class="max-2-col">
+
 - analogue photography
 - gaming & game design
 - bookbinding
 - sailing
+
+</span>
