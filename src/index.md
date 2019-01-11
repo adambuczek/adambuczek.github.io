@@ -32,13 +32,13 @@ Experience
 ---
 ### Web Developer & Art Generalist at Thing Trunk Indie Gamedev Studio  
 *Fall 2015 - Winter 2019*  
-I worked on [Book of Demons](https://store.steampowered.com/app/449960/Book_of_Demons/) the first title in the Return 2 Games series. In addition to the design and development of [return2games.com](https://return2games.com/) and [midcoregames.info](https://midcoregames.info/), I created of graphic assets, particle effects, animations and promotional materials. I set up and maintained various support services: aggregation of feedback from players, email newsltetters based on [Foundation for Emails](https://foundation.zurb.com/emails.html).
+I worked on [Book of Demons](https://store.steampowered.com/app/449960/Book_of_Demons/) the first title in the Return 2 Games series. In addition to the design and development of [return2games.com](https://return2games.com/) and [midcoregames.info](https://midcoregames.info/), I created of graphic assets, particle effects, animations and promotional materials. I set up and maintained various support services: aggregation of feedback from players, email newsletters based on [Foundation for Emails](https://foundation.zurb.com/emails.html).
 
 ----------------------------------
 
 ### Intern at Orange Labs
 *Winter 2014*  
-I worked on PUMA research project. I helped develop UI for smart home managment app.
+I worked on PUMA research project. I helped develop UI for smart home management app.
 
 ----------------------------------
 
@@ -59,6 +59,7 @@ Native Polish speaker, fluent in English, working knowledge of Spanish.
 
 Interests
 ---
-- analog photography
-- sailing
+- analogue photography
 - gaming & game design
+- bookbinding
+- sailing
