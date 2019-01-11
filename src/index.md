@@ -69,7 +69,7 @@ Interests
 ---
 <span class="max-2-col">
 
-- analogue photography
+- analog photography
 - gaming & game design
 - bookbinding
 - sailing

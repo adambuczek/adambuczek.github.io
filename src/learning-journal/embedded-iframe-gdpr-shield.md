@@ -10,7 +10,7 @@ Under General Data Protection Regulation and Privacy and Electronic Communicatio
 
 It wasn't really clear to me how to deal with 3rd party cookies created when embedding iframes.
 
-Online videos, social networking features, analytics and ad targeting... It is safe to assume that such services track a information to measure the number and behaviour of users, including information that links user's visits to websites with other accounts that they are logged into. Those cookies may provide data that can be later used by those 3rd parties or other parties they work with for their own purposes, such as targeted ads or analytics. 
+Online videos, social networking features, analytics and ad targeting... It is safe to assume that such services track a information to measure the number and behavior of users, including information that links user's visits to websites with other accounts that they are logged into. Those cookies may provide data that can be later used by those 3rd parties or other parties they work with for their own purposes, such as targeted ads or analytics. 
 
 I created a snippet that blocks loading of iframes `src` until user gives their express consent.
 
