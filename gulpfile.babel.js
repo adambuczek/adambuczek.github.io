@@ -89,7 +89,7 @@ const reload = done => {
 }
 
 const clean = () => run(`rm -rf ${paths.dest}`).exec()
-const build = gulp.series(clean, generate, html, styles, inline)
+const build = gulp.series(clean, generate, html, styles, assets, inline)
 const watch = () => {
     gulp.watch(paths.styles.src, styles)
     gulp.watch(paths.generate.src, gulp.series(generate, reload))
