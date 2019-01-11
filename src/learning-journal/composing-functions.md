@@ -1,8 +1,10 @@
 ---
 layout: note.njk
 title: Composing Functions
+date: 2019-01-10
 tags: 
  - note
+ - javascript
 ---
 Take any number of functions and return one that will be applied to passed arguments from right to left. Given functions `a, b, c` this:
 ```js
@@ -24,7 +26,7 @@ const pow = (base, exponent) => base**exponent
 ```
 And a jest tests:
 * composing 3 functions
-* 1 function, wich returns early only calling the single function
+* 1 function, which returns early only calling the single function
 * and 0 function variant which returns a function returning first passed argument
 ```js
 describe('composing functions', () => {
@@ -48,7 +50,7 @@ First implementation
 When passed more than 1 function it returns a function that:
 
 * reverses the function array to apply functions `a(b(c(1,2)))` and not `c(b(a(1,2)))`
-* maps funcions array saving intermediate return values in an array
+* maps functions array saving intermediate return values in an array
 * needs to be 'unpacked' before returning (`.pop()[0]`)
 
 ```js
@@ -64,7 +66,7 @@ const compose = (...funcs) => {
     }
 }
 ```
-Saving intermediate values and returning only the accumulated, final value canbe done easier using `reduce`.
+Saving intermediate values and returning only the accumulated, final value can be done easier using `reduce`.
 
 ReduceRight implementation
 ---
@@ -72,7 +74,7 @@ Reversing the `funcs` array can be avoided with `reduceRight` processing an arra
 
 Being able to compose functions accepting multiple arguments up front means operating on argument arrays. Call to the rightmost (1st) function uses spread operator `fn(...acc)`.
 
-When `initialValue` is ommited `reduceRight` passes two last functions on first loop and starts from penultimate element (`funcs.length - 2`). First iteration applies both functions and spreads initial arguments.
+When `initialValue` is omitted `reduceRight` passes two last functions on first loop and starts from penultimate element (`funcs.length - 2`). First iteration applies both functions and spreads initial arguments.
 
 ```js
 const compose = (...funcs) => {
@@ -86,7 +88,7 @@ const compose = (...funcs) => {
 ```
 Redux implementation
 ---
-Reduces `funcs` array and acumulates functions wrapping each new function in those already iterated over effectively reversing the calling order.
+Reduces `funcs` array and accumulates functions wrapping each new function in those already iterated over effectively reversing the calling order.
 
 It also shows that spreading an array to return its first element `(...args) => args[0]` is redundant when `arg => arg` discards all arguments but the first one.
 
