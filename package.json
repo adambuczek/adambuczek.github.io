@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "gulp",
+    "build-gh": "gulp && mv dist/* .",
     "develop": "gulp develop",
     "test": "jest --watch *.test.js"
   },
