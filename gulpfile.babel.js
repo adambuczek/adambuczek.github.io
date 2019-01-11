@@ -26,10 +26,10 @@ paths.html = {
     src: `${paths.dest}/**/*.html`,
 }
 paths.generate = {
-    src: [`${paths.src}/**/*.njk`, `${paths.src}/**/*.md`],
+    src: [`${paths.src}/**/*.njk`, `${paths.src}/**/*.md`, `${paths.src}/**/*.html`],
 }
 paths.assets = {
-    src: [`${paths.src}/assets/*.jpeg`],
+    src: [`${paths.src}/assets/*.jpeg`, `${paths.src}/assets/*.svg`],
     dest: [`${paths.dest}/assets`],
 }
 
