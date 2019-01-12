@@ -106,4 +106,4 @@ export default function compose(...funcs) {
   return funcs.reduce((a, b) => (...args) => a(b(...args)))
 }
 ```
-[On codepen.io](https://codepen.io/adambuczek/pen/EGORVY).
+[On codepen.io](https://codepen.io/adambuczek/pen/EGORVY)
