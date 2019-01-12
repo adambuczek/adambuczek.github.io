@@ -7,7 +7,8 @@
     "build": "gulp",
     "build-gh": "gulp && mv dist/* .",
     "develop": "gulp develop",
-    "test": "jest --watch *.test.js"
+    "test": "jest --watch *.test.js",
+    "md2pug": "node md2pug.js"
   },
   "author": "",
   "license": "ISC",
@@ -32,6 +33,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "jest": "^23.6.0",
     "luxon": "^1.9.0",
+    "markdown-to-pug": "^1.0.11",
     "node-sass": "^4.11.0"
   },
   "dependencies": {
