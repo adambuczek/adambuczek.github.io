@@ -38,7 +38,7 @@ describe('composing functions', () => {
     test('return the same value as 1 fn', () => {
         const data = [1, 2, 3, 4, 5] 
         expect(compose(sum)(data)).toBe(sum(data))
-        expect(compose(pow)(2,4)).toBe(sum(pow(2,4)))
+        expect(compose(pow)(2,4)).toBe(pow(2,4))
     })
     test('return 1st argument given 0 fns', () => {
         expect(compose()('whatever', 1)).toBe('whatever')
