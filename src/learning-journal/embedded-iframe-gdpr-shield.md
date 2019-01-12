@@ -15,7 +15,7 @@ Online videos, social networking features, analytics and ad targeting... It is s
 I created a snippet that blocks loading of iframes `src` until user gives their express consent.
 
 <iframe
-  height='403'
+  height='408'
   scrolling='no'
   title='Embedded Iframe GDPR Shield' src='//codepen.io/adambuczek/embed/preview/QrRxgL/?height=403&theme-id=light&default-tab=result'
   frameborder='no'
