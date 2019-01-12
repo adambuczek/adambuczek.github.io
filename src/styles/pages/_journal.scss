@@ -1,26 +1,37 @@
-@import 'includes/vars';
-@import 'includes/functions';
+@import "includes/vars";
+@import "includes/functions";
 
 .page--journal {
-
   ul {
     padding: 0;
     list-style: none;
     overflow-x: hidden;
     position: relative;
 
-    line-height: to-rem(6*8);
+    line-height: to-rem(6 * 8);
 
-    // dotted border is too low, line made prom periods is flush with text baseline
-    li::after {
-      content: ".......................................................................................................";
+    a,
+    span {
+      background-color: $bg-color;
+    }
+
+    span {
+      margin-left: 1rem;
+    }
+
+    a::after,
+    span::before {
+      content: "..............................................................................................................................................................................................................";
       position: absolute;
       z-index: -1;
       color: lighten($primary-text-color, 50);
     }
-
-    span {
+    span::before {
+      right: 0;
       background-color: $bg-color;
+    }
+    a::after {
+      left: 0;
     }
   }
 }

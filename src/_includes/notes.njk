@@ -4,8 +4,8 @@
     <h1>{{ title }}</h1>
       <ul>
         {%- for note in collections.note | reverse -%}
-          <li>
-            <a href="{{ note.url }}">{{ note.data.title }}</a>
+          <li class="clearfix">
+            <a class="float-left" href="{{ note.url }}">{{ note.data.title }}</a>
             <span class="float-right">{{ note.date | formatDate }}</span>
           </li>
         {%- endfor -%}

@@ -15,6 +15,18 @@ a {
   float: right;
 }
 
+.float-left {
+  float: left;
+}
+
+.clearfix{ 
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+}
+
 :not(pre) > code {
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   // background: #dadada;
