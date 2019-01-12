@@ -21,15 +21,17 @@ pre[class*="language-"] {
 
 pre[class*="language-"] {
   position: relative;
-  padding: to-rem(2*8);
+  padding: to-rem(2*8) 0;
   margin: to-rem(2*8) 0;
   overflow: auto;
   border-radius: 0;
   counter-reset: line;
 }
 
+// padding on pre doesn't work on firefox mobile
+// this does
 code[class*="language-"] > span {
-  padding-left: 2rem;
+  padding: 0 3rem;
 }
 
 code[class*="language-"] > span:before {
