@@ -4,25 +4,28 @@ title: Online resume
 description: I’m Adam Buczek, a front end developer. This is my online resume.
 slug: index
 ---
-I’m Adam Buczek, a front end developer. This is my online resume.
+
+I’m Adam Buczek, a front end developer.
+===
+This is my online resume.
 
 Skills
 ---
 <span class="max-3-col">
 
+- ES6+
 - HTML5
 - CSS3 & Sass
-- ES6+
 - React
 - Redux
-- TDD
 - Node.js
 - git
+- TDD
 - Webpack
 - gulp
-- Docker
 - bash
-- 
+- Docker
+
 </span>
 
 Also:
@@ -38,28 +41,56 @@ Also:
 
 Experience
 ---
-### Web Developer & Art Generalist at Thing Trunk Indie Gamedev Studio  
-*Fall 2015 - Winter 2019*  
-I worked on [Book of Demons](https://store.steampowered.com/app/449960/Book_of_Demons/) the first title in the Return 2 Games series. In addition to the design and development of [return2games.com](https://return2games.com/) and [midcoregames.info](https://midcoregames.info/), I created of graphic assets, particle effects, animations and promotional materials. I set up and maintained various support services: aggregation of feedback from players, email newsletters based on [Foundation for Emails](https://foundation.zurb.com/emails.html).
+
+<hgroup>
+
+##### Fall 2015 - Winter 2019
+### Web Developer & Art Generalist 
+#### Thing Trunk Indie Gamedev Studio
+
+</hgroup>
+
+I worked on [Book of Demons](https://store.steampowered.com/app/449960/Book_of_Demons/) the first title in the Return 2 Games series. In addition to the design and development of [return2games.com](https://return2games.com/) and [midcoregames.info](https://midcoregames.info/), I created of graphic assets, particle effects, animations and promotional materials. I set up and maintained various support services e.g.: aggregation of feedback from players, email newsletters based on [Foundation for Emails](https://foundation.zurb.com/emails.html).
 
 ----------------------------------
 
-### Intern at Orange Labs
-*Winter 2014*  
+<hgroup>
+
+##### Winter 2014
+### UI Internship
+#### Orange Labs
+
+</hgroup>
+
 I worked on PUMA research project. I helped develop UI for smart home management app.
 
 ----------------------------------
 
+<hgroup>
+
+##### 2008 - Present
 ### Freelance Designer & Web Developer
-*2008 - Present*  
+
+</hgroup>
+
 Both programming and design are interests I cultivate since I was 14. Over the years I have designed and coded websites, created restaurant menus and marketing materials. Here is my short [print portfolio](https://dev.adambuczek.com/print-portfolio/).
+
+----------------------------------
 
 Education
 ---
+
+<hgroup>
+
+##### 2011 - 2015
 ### Academy of Fine Arts in Warsaw
-*2011 - 2015*  
-Faculty of Design, Industrial and Visual Communication Design
-For one of my student projects I received the first prize in the [Arting 2015 competition](http://artingwystawa.flid.pl/energometr-a-buczek-m-nowicki-pierwsza-nagroda/).
+#### Faculty of Design, Product and Visual Communication Design
+
+</hgroup>
+
+My BA project was a quadrocopter drone designed for use in wildfire risk zones for fire prevention and firefighting action coordination. Here is a [short presentation](https://dev.adambuczek.com/drone/).
+
+One of my student projects received the first prize in the [Arting 2015 competition (PL)](http://artingwystawa.flid.pl/energometr-a-buczek-m-nowicki-pierwsza-nagroda/).
 
 Languages
 ---
@@ -69,9 +100,9 @@ Interests
 ---
 <span class="max-2-col">
 
-- analog photography
-- gaming & game design
 - bookbinding
+- analog photography
 - sailing
+- gaming & game design
 
 </span>
