@@ -24,24 +24,24 @@ const mult2 = multiplier => multiplier * 2
 const sum = (...summands) => summands.reduce((a, c) => a + c)
 const pow = (base, exponent) => base**exponent
 ```
-And a jest tests:
+And mocha + chai tests:
 * composing 3 functions
 * 1 function, which returns early only calling the single function
 * and 0 function variant which returns a function returning first passed argument
 ```js
 describe('composing functions', () => {
-    test('return the same value as 3 funcs', () => {
+    it('return the same value as 3 funcs', () => {
         const data = [1, 2, 3, 4, 5] 
-        expect(compose(add5, mult2, sum)(data))
-            .toBe(add5(mult2(sum(data))))
+        expect(compose(add5, mult2, sum)(...data))
+            .to.equal(add5(mult2(sum(...data))))
     })
-    test('return the same value as 1 fn', () => {
+    it('return the same value as 1 fn', () => {
         const data = [1, 2, 3, 4, 5] 
-        expect(compose(sum)(data)).toBe(sum(data))
-        expect(compose(pow)(2,4)).toBe(pow(2,4))
+        expect(compose(sum)(data)).to.equal(sum(data))
+        expect(compose(pow)(2,4)).to.equal(pow(2,4))
     })
-    test('return 1st argument given 0 fns', () => {
-        expect(compose()('whatever', 1)).toBe('whatever')
+    it('return 1st argument given 0 fns', () => {
+        expect(compose()('whatever', 1)).to.equal('whatever')
     })
 })
 ```
@@ -106,3 +106,4 @@ export default function compose(...funcs) {
   return funcs.reduce((a, b) => (...args) => a(b(...args)))
 }
 ```
+[On codepen.io](https://codepen.io/adambuczek/pen/EGORVY).
