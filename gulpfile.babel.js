@@ -92,7 +92,8 @@ const clean = () => run(`rm -rf ${paths.dest}`).exec()
 const build = gulp.series(clean, generate, html, styles, assets, inline)
 const watch = () => {
     gulp.watch(paths.styles.src, styles)
-    gulp.watch(paths.generate.src, gulp.series(generate, reload))
+    // purge css depends on html files, styles must be recalculated when it changes
+    gulp.watch(paths.generate.src, gulp.series(generate, styles, reload))
 }
 const develop = gulp.series(clean, generate, styles, assets, serve, watch)
 
