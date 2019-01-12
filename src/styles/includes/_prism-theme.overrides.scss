@@ -20,8 +20,24 @@ pre[class*="language-"] {
 }
 
 pre[class*="language-"] {
+  position: relative;
   padding: to-rem(2*8);
   margin: to-rem(2*8) 0;
   overflow: auto;
   border-radius: 0;
+  counter-reset: line;
+}
+
+code[class*="language-"] > span {
+  padding-left: 2rem;
+}
+
+code[class*="language-"] > span:before {
+  counter-increment: line;
+  content: counter(line);
+  text-align: right;
+  width: 2rem;
+  position: absolute;
+  left: 0;
+  opacity: .2;
 }
