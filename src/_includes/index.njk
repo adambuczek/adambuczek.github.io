@@ -15,7 +15,7 @@
         <li><a href="/">Adam Buczek</a></li>
       </ul>
     </nav>
-    <main role="main" {% if slug %} class="page--{{ slug | lower }}" {% endif %}>
+    <main role="main" {%- if slug -%} class="page--{{ slug | lower }}" {%- endif -%}>
     {% block content %}
       {{ content | safe }}
     {% endblock %}

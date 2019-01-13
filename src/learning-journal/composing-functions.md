@@ -5,6 +5,7 @@ date: 2019-01-10
 tags: 
  - note
  - javascript
+published: true
 ---
 Take any number of functions and return one that will be applied to passed arguments from right to left. Given functions `a, b, c` this:
 ```js

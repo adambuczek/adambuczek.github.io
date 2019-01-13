@@ -5,6 +5,7 @@ date: 2019-01-07
 tags: 
  - note
  - iframe
+published: true
 ---
 You have no control over sites that provide their functionality via embedded frames. 3rd party providers who offer their functionality for free usually gather user data to be sold to ad providers as a form of *payment*.
 

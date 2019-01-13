@@ -5,6 +5,7 @@ date: 2019-01-11
 tags: 
  - note
  - iframe
+published: true 
 ---
 Under General Data Protection Regulation and Privacy and Electronic Communications Regulations you must get user's consent prior to setting cookies on his device.
 
