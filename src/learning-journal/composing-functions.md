@@ -16,7 +16,7 @@ Is a more readable equivalent of:
 ```js
 a(b(c(1,2)))
 ```
-First test
+Tests (mocha + chai)
 ---
 I wrote a few simple functions operating on numbers:
 ```js
@@ -25,7 +25,6 @@ const mult2 = multiplier => multiplier * 2
 const sum = (...summands) => summands.reduce((a, c) => a + c)
 const pow = (base, exponent) => base**exponent
 ```
-And mocha + chai tests:
 * composing 3 functions
 * 1 function, which returns early only calling the single function
 * and 0 function variant which returns a function returning first passed argument
