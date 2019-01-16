@@ -92,7 +92,7 @@ hgroup {
   }
 }
 
-p, ul, iframe {
+p, ul, ol, iframe {
   margin: to-rem(2*8) 0;
   font-size: to-rem(2*8);
   line-height: to-rem(3*8);
@@ -102,7 +102,7 @@ p, ul, iframe {
   }
 }
 
-ul {
+ul, ol {
   padding: 0 0 0 to-rem(2*8);
 }
 
@@ -116,4 +116,10 @@ section {
 
 hr {
   margin: to-rem(4*8) 0;
+}
+
+sup.footnote-ref {
+  font-size: to-rem(2*8);
+  // prevent footnotes from messing up the baseline grid
+  line-height: to-rem(1*8);
 }
