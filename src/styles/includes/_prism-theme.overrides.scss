@@ -21,20 +21,14 @@ pre[class*="language-"] {
 
 pre[class*="language-"] {
   position: relative;
-  padding: to-rem(2*8) 0;
+  padding: to-rem(2*8) to-rem(2*8) to-rem(2*8) to-rem(6*8);
   margin: to-rem(2*8) 0;
   overflow: auto;
   border-radius: 0;
   counter-reset: line;
 }
 
-// padding on pre doesn't work on firefox mobile
-// this does
-code[class*="language-"] > span {
-  padding: 0 3rem;
-}
-
-code[class*="language-"] > span:before {
+code[class*="language-"] span.highlight-line:before {
   counter-increment: line;
   content: counter(line);
   text-align: right;
