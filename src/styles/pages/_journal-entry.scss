@@ -5,8 +5,8 @@
 
 .journal-entry--date,
 .journal-entry--codepen-link {
-  @extend .journal-entry;
-  font-size: 80%;
+  @extend .journal-entry !optional;
+  font-size: 90%;
   line-height: to-rem(2*8);
 }
 

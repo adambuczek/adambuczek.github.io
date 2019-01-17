@@ -11,29 +11,10 @@ a {
   color: darkred;
 }
 
-.float-right {
-  float: right;
-}
-
-.float-left {
-  float: left;
-}
-
-.clearfix{ 
-  &::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-}
-
 :not(pre) > code {
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  // background: #dadada;
   color: darkred;
   word-wrap: break-word;
-  // padding: .1rem .3rem .2rem;
-  // border-radius: .2rem;
 }
 
 img {
@@ -44,16 +25,13 @@ ul {
   list-style: square;
 }
 
-.dotted-border {
-  border: 1px dotted lighten($primary-text-color, 50);
-}
-
 hr {
   border: 0;
   border-top: 1px solid lighten($primary-text-color, 70);
 }
 
 @import 'includes/footer';
+@import 'includes/utility-classes';
 
 @import 'pages/index';
 @import 'pages/journal';
