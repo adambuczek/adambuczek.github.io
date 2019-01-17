@@ -37,3 +37,20 @@ code[class*="language-"] span.highlight-line:before {
   left: 0;
   opacity: .2;
 }
+
+.token.keyword {
+  color: #59eeff;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted,
+.token.operator {
+  color: #ff3d6e;
+}
+
+.token.string {
+  color: #ff8041;
+}
