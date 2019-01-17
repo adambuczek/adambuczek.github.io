@@ -1,7 +1,12 @@
 {% extends "index.njk" %}
 
 {% block content %}
-  <span>{{ page.date | formatDate }}</span>
+  <span class="journal-entry--date">{{ page.date | formatDate }}</span>
+  {%- if codepen -%}
+    <a class="journal-entry--codepen-link" href="{{ codepen }}">
+      on codepen
+    </a>
+  {%- endif -%}
   <h1>{{ title }}</h1>
   {{ content | safe }}
 {% endblock %}
