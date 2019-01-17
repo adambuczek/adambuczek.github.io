@@ -6,6 +6,7 @@ tags:
  - note
  - javascript
 published: true
+codepen: https://codepen.io/adambuczek/pen/KbrebO
 ---
 JavaScript functions have a method called `bind`. It's used to bind `this`
 keyword to the provided function. It returns an [exotic object](http://www.ecma-international.org/ecma-262/6.0/#sec-exotic-object)
@@ -122,5 +123,3 @@ var allArguments = args.concat(Array.prototype.slice.call(arguments))
 ```
 As `push.apply()` works for passed array-like objects and also doesn't create
 unnecessary copy of the array.
-
-[On codepen.io](https://codepen.io/adambuczek/pen/KbrebO)

@@ -6,6 +6,7 @@ tags:
  - note
  - javascript
 published: true
+codepen: https://codepen.io/adambuczek/pen/EGORVY
 ---
 Take any number of functions and return one that will be applied to passed arguments from right to left. Given functions `a, b, c` this:
 ```js
@@ -106,4 +107,3 @@ export default function compose(...funcs) {
   return funcs.reduce((a, b) => (...args) => a(b(...args)))
 }
 ```
-[On codepen.io](https://codepen.io/adambuczek/pen/EGORVY)
