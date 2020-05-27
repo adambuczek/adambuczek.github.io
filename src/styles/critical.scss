@@ -16,12 +16,12 @@ body {
   font-family: 'Roboto Slab', serif;
   padding: 0;
   margin: 0;
-  font-size: to-rem(2*8);
-  line-height: to-rem(3*8);
+  font-size: to-rem(2*$modular-scale-base-px);
+  line-height: to-rem(3*$modular-scale-base-px);
 }
 
 nav {
-  margin: to-rem(2*8) 5%;
+  margin: to-rem(2*$modular-scale-base-px) 5%;
   ul {
     margin: 0;
     padding: 0;
@@ -34,14 +34,14 @@ nav {
     }
   }
   @media screen and (min-width: 670px) {
-    margin-left: to-rem(2*8);
+    margin-left: to-rem(2*$modular-scale-base-px);
   }
 }
 
 main {
   width: 90%;
   max-width: 600px;
-  margin: to-rem(6*8) auto;
+  margin: to-rem(6*$modular-scale-base-px) auto;
 }
 
 h1, h2, h3, h4, h5 {
@@ -51,59 +51,59 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-  margin: to-rem(4*8) 0 to-rem(3*8);
-  font-size: to-rem(5*8);
-  line-height: to-rem(6*8);
+  margin: to-rem(4*$modular-scale-base-px) 0 to-rem(3*$modular-scale-base-px);
+  font-size: to-rem(5*$modular-scale-base-px);
+  line-height: to-rem(6*$modular-scale-base-px);
   font-weight: 300;
 }
 
 h2 {
-  margin: to-rem(4*8) 0 to-rem(2*8);
-  font-size: to-rem(4*8);
-  line-height: to-rem(5*8);
+  margin: to-rem(4*$modular-scale-base-px) 0 to-rem(2*$modular-scale-base-px);
+  font-size: to-rem(4*$modular-scale-base-px);
+  line-height: to-rem(5*$modular-scale-base-px);
 }
 
 h3 {
-  margin: to-rem(2*8) 0 to-rem(1*8);
-  font-size: to-rem(3*8);
-  line-height: to-rem(4*8);
+  margin: to-rem(2*$modular-scale-base-px) 0 to-rem(1*$modular-scale-base-px);
+  font-size: to-rem(3*$modular-scale-base-px);
+  line-height: to-rem(4*$modular-scale-base-px);
   font-weight: 600;
 }
 
 h4 {
-  margin: to-rem(1*8) 0;
-  font-size: to-rem(2*8);
-  line-height: to-rem(3*8);
+  margin: to-rem(1*$modular-scale-base-px) 0;
+  font-size: to-rem(2*$modular-scale-base-px);
+  line-height: to-rem(3*$modular-scale-base-px);
   font-weight: 600;
 }
 
 h5 {
-  margin: to-rem(1*8) 0;
-  font-size: to-rem(2*8);
-  line-height: to-rem(3*8);
+  margin: to-rem(1*$modular-scale-base-px) 0;
+  font-size: to-rem(2*$modular-scale-base-px);
+  line-height: to-rem(3*$modular-scale-base-px);
   font-weight: 400;
   // font-family: inherit;
 }
 
 hgroup {
-  margin: to-rem(2*8) 0;
+  margin: to-rem(2*$modular-scale-base-px) 0;
   h1, h2, h3, h4, h5 {
     margin: 0;
   }
 }
 
-p, ul, ol, iframe {
-  margin: to-rem(2*8) 0;
-  font-size: to-rem(2*8);
-  line-height: to-rem(3*8);
+p, ul, ol, iframe, blockquote {
+  margin: to-rem(2*$modular-scale-base-px) 0;
+  font-size: to-rem(2*$modular-scale-base-px);
+  line-height: to-rem(3*$modular-scale-base-px);
   code {
     // prevent inline code blocks from messing up the baseline grid
-    line-height: to-rem(1*8);
+    line-height: to-rem(1*$modular-scale-base-px);
   }
 }
 
 ul, ol {
-  padding: 0 0 0 to-rem(2*8);
+  padding: 0 0 0 to-rem(2*$modular-scale-base-px);
 }
 
 footer img {
@@ -111,15 +111,23 @@ footer img {
 }
 
 section {
-  padding: to-rem(2*8) 0;
+  padding: to-rem(2*$modular-scale-base-px) 0;
 }
 
 hr {
-  margin: to-rem(4*8) 0;
+  margin: to-rem(4*$modular-scale-base-px) 0;
 }
 
 sup.footnote-ref {
-  font-size: to-rem(2*8);
+  font-size: to-rem(2*$modular-scale-base-px);
   // prevent footnotes from messing up the baseline grid
-  line-height: to-rem(1*8);
+  line-height: to-rem(1*$modular-scale-base-px);
+}
+
+blockquote {
+  border-left: 6px rgba(1,1,1,.1) solid;
+  background-color: rgba(1,1,1,.1);
+  padding-left: to-rem(2*$modular-scale-base-px);
+  padding-top: to-rem(1*$modular-scale-base-px);
+  padding-bottom: to-rem(1*$modular-scale-base-px);
 }

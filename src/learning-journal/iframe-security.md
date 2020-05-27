@@ -15,6 +15,8 @@ Modern browsers are non susceptible to cross-origin `iframes` tampering with emb
 
 This cross-origin frame doesn't have access to `top` frame which is the current website:
 
+> Cross-origin frames may stop working at some point. Source used can be found at the [bottom of this page](#cross-origin-frame-source).
+
 <iframe
   height="336"
   class="dotted-border"
@@ -86,4 +88,75 @@ Omitting `allow-same-origin` on cross-origin `iframe` blocks `opener` in popups.
   sandbox="allow-scripts allow-popups"
   style="width: 100%;"></iframe>
 
-  It would be really interesting to try this examples on a legacy browser.
+<a id="cross-origin-frame-source">
+
+### Cross origin frame source
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <a href="" target="_blank">open this frame in blank target</a>
+  <ul id="log"></ul>
+  <script type="text/javascript">
+
+    const logEl = document.getElementById('log')
+    const log = (...messages) => {
+      const messageEl = document.createElement('li')
+      messageEl.style.display = 'flex'
+      messageEl.style.borderTop = '1px solid black'
+      messageEl.style.padding = '1rem 0'
+      const spans = messages.map(message => {
+        const span = document.createElement('span')
+        span.style.flex = `${100 / messages.length}%`
+        span.textContent = message
+        messageEl.append(span)
+      })
+      logEl.append(messageEl)
+    }
+    logEl.style.padding = 0
+    logEl.style.margin = 0
+
+    const tryToReadWidowProp = str => {
+      try {
+        const path = str.split('.')
+        result = path.reduce((a, c) => a[c], window)
+      } catch (error) {
+        result = error.message
+      } finally {
+        return result
+      }
+    }
+
+    const locationHref = tryToReadWidowProp('location.href')
+    const topLocationHref = tryToReadWidowProp('top.location.href')
+
+    log('window location:', locationHref)
+    log('top location:', topLocationHref)
+    log('opener location:', tryToReadWidowProp('opener.location.href'))
+    log('opener top location:', tryToReadWidowProp('opener.top.location.href'))
+
+    if (!(locationHref === topLocationHref)) {
+      const button = document.createElement('button')
+      button.textContent = 'open this frame in a blank target'
+      button.addEventListener('click', () => window.open(window.location.href, '_blank'))
+      document.body.append(button)
+    }
+
+    if (window.opener) {
+      const button = document.createElement('button')
+      button.textContent = 'navigate top frame of opener to example.com'
+      button.addEventListener('click', () => opener.top.location.href = '//example.com')
+      document.body.append(button)
+    }
+
+  </script>  
+</body>
+</html>
+```
