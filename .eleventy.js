@@ -14,9 +14,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addNunjucksFilter('formatDate', dateObj => DateTime.fromJSDate(dateObj).toFormat('dd LLL yyyy'))
 
   // Markdown  
-  eleventyConfig.setLibrary("md", markdownIt()
-    .use(mdFootnote)
-  )
+  eleventyConfig.setLibrary("md", markdownIt({
+    html: true
+  }).use(mdFootnote))
 
   return {
     dir: {
