@@ -1,10 +1,33 @@
 // @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500|Roboto+Slab');
 
-@import 'includes/vars';
+$primary-text-color: #000;
+//
+$bg-color: #fff;
+//
+$modular-scale-base-px: 6;
+
+html {
+  $base-font-size: $modular-scale-base-px * 2;
+  font-size: #{$base-font-size}px;
+}
+
 @import 'includes/functions';
+
+section {
+  padding: to-rem(1*$modular-scale-base-px) 0 0 0;
+}
 
 nav, footer {
   display: none;
+}
+
+blockquote, iframe, ol, p, ul, hgroup {
+  margin: 0 0 to-rem(1*$modular-scale-base-px);
+}
+
+hr {
+  margin: to-rem(1*$modular-scale-base-px) 0;
+  opacity: .5;
 }
 
 main {
@@ -14,11 +37,35 @@ main {
 }
 
 @page {
-  margin: 2cm;
+  margin: 1.5cm;
 }
 
 h1 {
-  margin: to-rem(2*8) 0;
+  margin: 0;
+  font-size: to-rem(4*$modular-scale-base-px);
+}
+
+h2 {
+  margin: to-rem(1*8) 0;
+  font-size: to-rem(3*$modular-scale-base-px);
+}
+
+h3 {
+  font-weight: bolder;
+  font-size: to-rem(3*$modular-scale-base-px);
+}
+
+h4 {
+  font-weight: normal;
+  font-style: italic;
+  margin: 0;
+  font-size: to-rem(3*$modular-scale-base-px);
+}
+
+h5 {
+  font-weight: lighter;
+  margin: 0;
+  font-size: to-rem(3*$modular-scale-base-px);
 }
 
 img {
@@ -28,6 +75,19 @@ img {
 a {
   text-decoration: none;
   color: $primary-text-color;
+}
+
+.hide-print {
+  display: none;
+}
+
+.page--index ul::after {
+  content: "";
+  flex: auto;
+}
+
+.page--index ul li {
+  flex: 0 0 25% !important;
 }
 
 @import 'includes/prism-theme-print';

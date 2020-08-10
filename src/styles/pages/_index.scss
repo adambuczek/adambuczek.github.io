@@ -5,8 +5,8 @@
 
   ul {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   .max-2-col li {
@@ -16,6 +16,4 @@
   .max-3-col li {
     flex: max(33%, 150px);
   }
-
-
 }
