@@ -11,7 +11,7 @@ import browserSync from 'browser-sync'
 import sass from 'gulp-sass'
 import purgecss from 'gulp-purgecss'
 
-sass.compiler = require('node-sass')
+sass.compiler = require('dart-sass')
 
 
 const paths = {
