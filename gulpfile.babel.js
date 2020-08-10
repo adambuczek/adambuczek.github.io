@@ -8,10 +8,10 @@ import minifyHTML from 'gulp-htmlmin'
 import inlineSource from 'gulp-inline-source'
 import run from 'gulp-run'
 import browserSync from 'browser-sync'
-import sass from 'gulp-sass'
+import sass from 'gulp-dart-sass'
 import purgecss from 'gulp-purgecss'
 
-sass.compiler = require('dart-sass')
+// sass.compiler = require('dart-sass')
 
 
 const paths = {
