@@ -6,8 +6,9 @@ tags:
  - note
  - iframe
 published: true
+excerpt: An illustration of how an embedded site can access the opener context. Based on [Tangled Web](https://nostarch.com/tangledweb).
 ---
-You have no control over sites that provide their functionality via embedded frames. 3rd party providers who offer their functionality for free usually gather user data to be sold to ad providers as a form of *payment*.
+You have no control over sites that provide their functionality via embedded frames. 3rd party providers who offer their functionality for free usually gather user data to be sold to ad providers as a form of *payment*.\
 
 Cross-origin Frames
 ---

@@ -7,6 +7,7 @@ tags:
  - javascript
 published: true
 codepen: https://codepen.io/adambuczek/pen/EGORVY
+excerpt: Short writeup on how to implement a function composing multiple functions. This task was given to me during a job interview.
 ---
 Take any number of functions and return one that will be applied to passed arguments from right to left. Given functions `a, b, c` this:
 ```js

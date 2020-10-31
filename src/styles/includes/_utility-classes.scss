@@ -13,10 +13,14 @@
     float: left;
 }
 
-.clearfix{ 
+.clearfix { 
     &::after {
         content: "";
         clear: both;
         display: table;
     }
+}
+
+.mt-0 {
+    margin-top: 0;
 }

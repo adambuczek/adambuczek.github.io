@@ -8,12 +8,11 @@ body {
 }
 
 a {
-  color: darkred;
+  color: $link-color;
 }
 
 :not(pre) > code {
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  color: darkred;
+  font-family: monospace;
   word-wrap: break-word;
 }
 
@@ -37,5 +36,5 @@ hr {
 @import 'pages/journal';
 @import 'pages/journal-entry';
 
-@import 'includes/prism-theme';
+// @import 'includes/prism-theme';
 @import 'includes/prism-theme.overrides';

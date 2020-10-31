@@ -5,9 +5,12 @@
       <ul>
         {%- for note in collections.note | reverse -%}
           {%- if note.data.published -%}
-            <li class="clearfix">
-              <a class="float-left" href="{{ note.url }}">{{ note.data.title }}</a>
-              <span class="float-right">{{ note.date | formatDate }}</span>
+            <li>
+              <div class="clearfix">
+                <a class="float-left" href="{{ note.url }}">{{ note.data.title }}</a>
+                <span class="float-right">{{ note.date | formatDate }}</span>
+              </div>
+              <p class="mt-0">{{ note.data.excerpt | markdown | safe }}</p>
             </li>
           {%- endif -%}
         {%- endfor -%}
