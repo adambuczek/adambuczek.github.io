@@ -38,12 +38,19 @@ nav {
 
 main {
   width: 90%;
-  max-width: 600px;
+  max-width: 720px;
   margin: to-rem(6*$modular-scale-base-px) auto;
 }
 
+h1, h2, h3, h4, h5, strong, em, p code,
+h1 span, h2 span, h3 span, h4 span, h5 span {
+  background: $accent;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 h1, h2, h3, h4, h5 {
-  color: lighten($primary-text-color, 10);
+  //color: lighten($primary-text-color, 10);
   font-family: sans-serif;
   font-weight: 400;
 }
@@ -123,9 +130,10 @@ sup.footnote-ref {
 }
 
 blockquote {
-  border-left: 6px rgba(1,1,1,.1) solid;
-  background-color: rgba(1,1,1,.1);
+  border-left: 6px rgba(1,1,1,.05) solid;
+  background-color: rgba(1,1,1,.05);
   padding-left: to-rem(2*$modular-scale-base-px);
-  padding-top: to-rem(1*$modular-scale-base-px);
-  padding-bottom: to-rem(1*$modular-scale-base-px);
+  padding-right: to-rem(1*$modular-scale-base-px);
+  padding-top: to-rem(.5*$modular-scale-base-px);
+  padding-bottom: to-rem(.5*$modular-scale-base-px);
 }

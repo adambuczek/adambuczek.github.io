@@ -39,7 +39,7 @@ code[class*="language-"] span.highlight-line:before {
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
-  background: white;
+  background: transparent;
 }
 
 .token.comment,
@@ -66,7 +66,7 @@ pre[class*="language-"] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-  font-weight: bold;
+  font-weight: 900;
 }
 
 .token.boolean,
@@ -80,20 +80,21 @@ pre[class*="language-"] {
 .token.char,
 .token.builtin,
 .token.inserted {
-  font-weight: normal;
+  font-style: italic;
 }
 
 .token.atrule,
 .token.attr-value,
 .token.function {
-  font-weight: normal;
+  font-weight: 600;
 }
 
 .token.keyword {
-  font-weight: bold;
+  opacity: .8;
+  font-weight: 900;
 }
 
 .token.regex,
 .token.important {
-  text-decoration: underline;
+  font-style: italic;
 }
