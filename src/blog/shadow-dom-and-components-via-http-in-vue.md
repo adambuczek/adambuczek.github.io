@@ -1,6 +1,6 @@
 ---
 layout: note.njk
-title: ShadowDOM and components via HTTP in Vue 2
+title: ShadowDOM and components<br>via HTTP in Vue&nbsp;2
 date: 2020-10-01
 tags: 
  - note
