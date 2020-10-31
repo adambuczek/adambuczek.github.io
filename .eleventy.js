@@ -7,6 +7,8 @@ const md = require('markdown-it')({
 })
 
 md.use(require('markdown-it-footnote'))
+md.use(require('markdown-it-deflist'))
+md.use(require('markdown-it-span'))
 
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(syntaxHighlight, {

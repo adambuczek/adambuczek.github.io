@@ -35,7 +35,9 @@
     "jest": "^26",
     "luxon": "^1",
     "markdown-it": "^12",
+    "markdown-it-deflist": "^2.1.0",
     "markdown-it-footnote": "^3",
+    "markdown-it-span": "^1.0.0",
     "markdown-to-pug": "^1"
   },
   "dependencies": {

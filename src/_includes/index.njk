@@ -9,12 +9,13 @@
     <meta name="description" content="{{ description }}">
   </head>
   <body>
-    {# <nav>
+    <nav>
       <ul>
-        <li><a href="/learning-journal">Learning Journal</a></li>|
         <li><a href="/">Adam Buczek</a></li>
+        |
+        <li><a href="/blog">Blog</a></li>
       </ul>
-    </nav> #}
+    </nav>
     <main role="main" {%- if slug -%} class="page--{{ slug | lower }}" {%- endif -%}>
     {% block content %}
       {{ content | safe }}

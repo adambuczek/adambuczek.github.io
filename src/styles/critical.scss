@@ -134,6 +134,15 @@ blockquote {
   background-color: rgba(1,1,1,.05);
   padding-left: to-rem(2*$modular-scale-base-px);
   padding-right: to-rem(1*$modular-scale-base-px);
-  padding-top: to-rem(.5*$modular-scale-base-px);
-  padding-bottom: to-rem(.5*$modular-scale-base-px);
+  padding-top: to-rem(1*$modular-scale-base-px);
+  padding-bottom: to-rem(1*$modular-scale-base-px);
+}
+
+dt {
+  font-weight: bolder;
+  margin-top: to-rem(2*$modular-scale-base-px);
+}
+dd {
+  margin-bottom: to-rem(2*$modular-scale-base-px);
+  margin-left: to-rem(2*$modular-scale-base-px);
 }
