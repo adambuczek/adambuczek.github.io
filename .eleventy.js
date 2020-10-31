@@ -2,21 +2,32 @@ const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight')
 const inclusiveLangPlugin = require('@11ty/eleventy-plugin-inclusive-language')
 const { DateTime } = require('luxon')
 
-const markdownIt = require('markdown-it')
-const mdFootnote = require('markdown-it-footnote')
+const md = require('markdown-it')({
+  html: true
+})
+
+md.use(require('markdown-it-footnote'))
 
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(syntaxHighlight)
   eleventyConfig.addPlugin(inclusiveLangPlugin)
 
+  // Nunjucks
+  eleventyConfig.addNunjucksFilter('formatDate', function (dateString) {
+    if (!dateString) {
+      throw new Error(`${this.ctx.slug} has no date set!`)
+    }
+    return DateTime.fromJSDate(dateString).toFormat('dd LLL yyyy')
+  })
 
-  // Nunjusks
-  eleventyConfig.addNunjucksFilter('formatDate', dateObj => DateTime.fromJSDate(dateObj).toFormat('dd LLL yyyy'))
+  eleventyConfig.addNunjucksFilter('markdown', function (markdownText) {
+      if (!markdownText) return
+      return md.renderInline(markdownText)
+    }
+  )
 
   // Markdown  
-  eleventyConfig.setLibrary("md", markdownIt({
-    html: true
-  }).use(mdFootnote))
+  eleventyConfig.setLibrary("md", md)
 
   return {
     dir: {
