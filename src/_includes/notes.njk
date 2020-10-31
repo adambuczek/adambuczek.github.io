@@ -7,7 +7,7 @@
           {%- if note.data.published -%}
             <li>
               <div class="clearfix">
-                <a class="float-left" href="{{ note.url }}">{{ note.data.title }}</a>
+                <a class="float-left entry-link" href="{{ note.url }}">{{ note.data.title }}</a>
                 <span class="float-right">{{ note.date | formatDate }}</span>
               </div>
               <p class="mt-0">{{ note.data.excerpt | markdown | safe }}</p>
