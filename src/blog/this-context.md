@@ -6,6 +6,7 @@ tags:
  - note
  - javascript
 published: true
+excerpt: Showcase of what `this` means in given context. Difference between strict and sloppy modes.
 ---
 
 `this` in JavaScript behaves differently based on current code context and execution mode.
@@ -22,26 +23,26 @@ In Node 10 regular function created in global scope has `this` pointing to globa
 console.log(this)
 // {} / window
 
-;(function() { console.log(this) })()
+(function() { console.log(this) })()
 // global / window
 
-;(() => { console.log(this) })()
+(() => { console.log(this) })()
 // {} / window
 
-;(function() { 
-    ;(function() { console.log(this) })()
+(function() { 
+    (function() { console.log(this) })()
     // global / window
 
-    ;(() => { console.log(this) })()
+    (() => { console.log(this) })()
     // global / window
     
 })()
 
-;(() => { 
-    ;(function() { console.log(this) })()
+(() => { 
+    (function() { console.log(this) })()
     // global / window
 
-    ;(() => { console.log(this) })()
+    (() => { console.log(this) })()
     // {} / window
 
 })()
@@ -52,19 +53,19 @@ console.log(this)
 Strict mode is more predictable as `this` is undefined in global scope.
 
 ```js
-;(function(){
+(function(){
     'use strict'
 
     console.log(this)
     // undefined
 
-    ;(function() { console.log(this) })()
+    (function() { console.log(this) })()
     // undefined
 
-    ;(() => { console.log(this) })()
+    (() => { console.log(this) })()
     // undefied
 
-    ;(function() { 
+    (function() { 
         (function() { console.log(this) })()
         // undefined
 
@@ -73,11 +74,11 @@ Strict mode is more predictable as `this` is undefined in global scope.
     
     })()
 
-    ;(() => { 
+    (() => { 
         (function() { console.log(this) })()
         // undefined
 
-        ;(() => { console.log(this) })()
+        (() => { console.log(this) })()
         // undefined
 
     })()
@@ -117,7 +118,7 @@ obj.returnBfn()() // {} / window
 ### Strict mode
 
 ```js
-;(function(){
+(function(){
     'use strict'
     const obj = {
         aaa: 111,

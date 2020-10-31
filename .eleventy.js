@@ -9,7 +9,9 @@ const md = require('markdown-it')({
 md.use(require('markdown-it-footnote'))
 
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addPlugin(syntaxHighlight)
+  eleventyConfig.addPlugin(syntaxHighlight, {
+    alwaysWrapLineHighlights: true
+  })
   eleventyConfig.addPlugin(inclusiveLangPlugin)
 
   // Nunjucks

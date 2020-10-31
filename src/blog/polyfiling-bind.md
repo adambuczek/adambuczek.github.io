@@ -7,6 +7,7 @@ tags:
  - javascript
 published: true
 codepen: https://codepen.io/adambuczek/pen/KbrebO
+excerpt: Learning how `bind` works by polyfilling it. This task was given to me during a job interview.
 ---
 JavaScript functions have a method called `bind`. It's used to bind `this`
 keyword to the provided function. It returns an [exotic object](http://www.ecma-international.org/ecma-262/6.0/#sec-exotic-object)

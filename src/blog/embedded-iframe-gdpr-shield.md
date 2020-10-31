@@ -5,7 +5,8 @@ date: 2019-01-11
 tags: 
  - note
  - iframe
-published: true 
+published: true
+excerpt: An ad hoc GDPR compliant way of embedding third-party services that may set cookies. 
 ---
 Under General Data Protection Regulation and Privacy and Electronic Communications Regulations you must get user's consent prior to setting cookies on his device.
 
@@ -29,3 +30,5 @@ I created a snippet that blocks loading of iframes `src` until user gives their 
 JS code iterates over all `iframe` elements and injects UI elements into them. `data-thumb` can be passed to show as blurred background until `iframe` is loaded.
 
 This method isn't ideal. It is very intrusive but helped me as a part of more robust system used on [return2games.com](https://return2games.com/).
+
+This is based on the solution found here: https://edps.europa.eu/press-publications/press-news/videos/cnn-regulators-probe-facebook-over-data-privacy-giovanni_en

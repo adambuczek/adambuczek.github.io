@@ -7,6 +7,7 @@ tags:
  - css
 published: true
 codepen: https://codepen.io/adambuczek/pen/PVYrWr
+excerpt: A collection of ways of XY centering content with CSS. This task was given to me during a job interview.
 ---
 
 ## Outdated: Table cell centering

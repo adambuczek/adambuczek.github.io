@@ -1,6 +1,6 @@
 ---
 layout: note.njk
-title: "React - Render Props & HOC"
+title: "Render Props & HOC"
 date: 2019-01-17
 tags:
   - note
@@ -8,6 +8,7 @@ tags:
   - react
 published: true
 codepen: https://codepen.io/adambuczek/pen/NeVxWE
+excerpt: A comparison of two ways of component composition in React. Based on adding runtime data filtering to HTML table.
 ---
 
 ## Filtering with Render Props and HOC
