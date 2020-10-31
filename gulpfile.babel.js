@@ -76,7 +76,7 @@ const serve = done => {
         reloadDebounce: 2000,
         ui: false,
         ghostMode: false,
-        browser: process.env.BROWSER || 'default',
+        open: false,
         server: {
             baseDir: paths.dest,
         }
