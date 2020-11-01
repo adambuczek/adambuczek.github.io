@@ -1,14 +1,15 @@
 ---
 layout: note.njk
 title: Vue app packing service
-date: 2020-10-01
+date: 2020-10-04
 tags: 
  - note
  - vue
  - javascript
  - node
  - webpack
-published: true
+published: false
+excerpt: On demand webpack SSR builds with configuration factory.
 ---
 
 ### Exporter

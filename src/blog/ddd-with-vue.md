@@ -4,7 +4,8 @@ title: Domain-driven architecture in&nbsp;Vue&nbsp;apps
 date: 2020-05-01
 tags: 
  - note
-published: true
+published: false
+excerpt: "Post-mortem of a long process of applying elements of domain-driven design into a front end app ecosystem."
 ---
 
 An app we were building started to grow and become unmanageable. A decision was made to split it into multiple smaller apps in one ecosystem. All shared backend. After a while the team started noticing problems. We were solving the same  problems over and over. Adding new features became very slow. Tasks was impossible to estimate and each sprint ended with frustration and delays.

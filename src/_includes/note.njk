@@ -7,6 +7,9 @@
       on codepen
     </a>
   {%- endif -%}
+  {%- if image -%}
+  <img src="{{ image }}" alt="{{ title | striptags | safe }}" title="{{ title | striptags | safe }}">
+  {%- endif -%}
   <h1>{{ title | markdown | safe }}</h1>
   {{ content | safe }}
 {% endblock %}

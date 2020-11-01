@@ -1,12 +1,13 @@
 ---
 layout: note.njk
 title: Building Vue apps in Vue app
-date: 2020-10-01
+date: 2020-10-03
 tags: 
  - note
  - vue
  - javascript
-published: true
+published: false
+excerpt: Building Vue app from async components loaded via HTTP. Using ShadowDOM to prevent styles to cross app boundaries.
 ---
 
 ### User Interface

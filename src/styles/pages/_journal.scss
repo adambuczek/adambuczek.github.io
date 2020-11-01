@@ -15,6 +15,10 @@
       background-color: $bg-color;
     }
 
+    li {
+      margin-bottom: to-rem(6*$modular-scale-base-px);
+    }
+
     span {
       margin-left: 1rem;
     }

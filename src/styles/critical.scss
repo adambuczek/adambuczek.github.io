@@ -67,20 +67,21 @@ h2 {
   margin: to-rem(4*$modular-scale-base-px) 0 to-rem(2*$modular-scale-base-px);
   font-size: to-rem(4*$modular-scale-base-px);
   line-height: to-rem(5*$modular-scale-base-px);
+  font-weight: 400;
 }
 
 h3 {
   margin: to-rem(2*$modular-scale-base-px) 0 to-rem(1*$modular-scale-base-px);
   font-size: to-rem(3*$modular-scale-base-px);
   line-height: to-rem(4*$modular-scale-base-px);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 h4 {
   margin: to-rem(1*$modular-scale-base-px) 0;
   font-size: to-rem(2*$modular-scale-base-px);
   line-height: to-rem(3*$modular-scale-base-px);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 h5 {
@@ -140,7 +141,6 @@ blockquote {
 }
 
 dt {
-  font-weight: bolder;
   margin-top: to-rem(2*$modular-scale-base-px);
 }
 dd {
