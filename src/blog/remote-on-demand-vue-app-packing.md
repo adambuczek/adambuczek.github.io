@@ -3,7 +3,7 @@ layout: note.njk
 title: Vue app packing service
 date: 2020-10-04
 tags: 
- - note
+ - draft
  - vue
  - javascript
  - node

@@ -3,7 +3,7 @@ layout: note.njk
 title: Async component library with Vue
 date: 2020-10-02
 tags: 
- - note
+ - draft
  - vue
  - javascript
 published: false

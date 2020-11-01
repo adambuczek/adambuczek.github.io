@@ -3,10 +3,10 @@ layout: note.njk
 title: Vue website builder
 date: 2020-10-01
 tags: 
- - note
+ - draft
  - vue
  - javascript
-published: true
+published: false
 excerpt: "An overview and introduction to a case study - building Vue based websites inside a Vue application."
 image: /assets/builder.png
 ---
@@ -56,7 +56,7 @@ System composed of 3 parts:
 
 ### Basic assumptions
 
-After in depth analysis in search of possible problem areas we decided on a set of important prerequisites:
+After in depth analysis in search of possible problem areas I decided on a set of prerequisites:
 
 **Modules in Component Libraries must adhere to a standard**
 : Editable elements must be identifiable and accessible for UI to inject event handlers.
@@ -71,3 +71,7 @@ After in depth analysis in search of possible problem areas we decided on a set 
 : We don't want to embed external libraries into CL modules.  
   *Firstly* this would ship external module (with its dependencies), eg. a third party gallery component, inside imported component and take away the chance for optimizing the package size in exporter.  
   *Secondly*, in case the module creation is outsourced we need to control what libraries are being used.
+
+## Summary
+
+Next 3 posts will describe specific elements of this system in depth and in insolation. I am going to explain how assumptions below were expressed in code. I will end the whole series with another overview - how the design of the whole system influenced each part and what was done to avoid coupling the code too tightly.

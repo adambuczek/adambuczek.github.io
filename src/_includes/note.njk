@@ -1,7 +1,11 @@
 {% extends "index.njk" %}
 
 {% block content %}
+  {%- if not published -%}
+  <span><strong>DRAFT</strong></span>
+  {%- else -%}
   <span class="journal-entry--date">{{ page.date | formatDate }}</span>
+  {%- endif -%}
   {%- if codepen -%}
     <a class="journal-entry--codepen-link" href="{{ codepen }}">
       on codepen

@@ -3,7 +3,7 @@ layout: note.njk
 title: Domain-driven architecture in&nbsp;Vue&nbsp;apps
 date: 2020-05-01
 tags: 
- - note
+ - draft
 published: false
 excerpt: "Post-mortem of a long process of applying elements of domain-driven design into a front end app ecosystem."
 ---

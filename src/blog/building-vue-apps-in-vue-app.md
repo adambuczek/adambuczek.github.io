@@ -3,7 +3,7 @@ layout: note.njk
 title: Building Vue apps in Vue app
 date: 2020-10-03
 tags: 
- - note
+ - draft
  - vue
  - javascript
 published: false
