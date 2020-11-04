@@ -12,32 +12,32 @@ image: /assets/builder.png
 ---
 
 We needed to create an application that allows users to build simple web pages in two flavours:
- - only html and css files allowed
+ - only HTML and CSS files allowed
  - some interactivity is allowed (tabs, sliders, accordions etc.)
 
-> For clarity the pages that are the end product of the whole process will be referred to as *Pages*.
+> For clarity the web pages that are the end product of the whole process will be referred to as *Pages* and their elements as *Modules*.
 
 ## The goals
 
-- End users should be presented with easy to use drag and drop interface. No technical skills required.
+- End users should be presented with an easy to use drag-and-drop interface.
 
-- UI should let users edit imported modules content: edit text (with and without formatting), add and change images etc.
+- UI should allow users to edit the content in imported *Modules*: edit text (with and without formatting), add and change images etc.
 
-- Users can rearrange modules in edit view.
+- Users can rearrange *Modules* in edit view.
 
-- *Pages* should be built from a library (or libraries) of modules created by another team (or teams) with new modules created on request.
+- *Pages* should be built from a library (or libraries) of *Modules* created by another team (or teams) with new created on request.
 
-- Modules' CSS should not leak to the main app and vice versa.
+- CSS should not leak to or out of the main app.
 
-- New modules can be created in a matter of hours - making them available in the UI should not require whole app to be redeployed.
+- New *Modules* can be created in a matter of hours - making them available in the UI should not require whole app to be redeployed.
 
-- Created *Pages* must be exportable into standalone HTML pages with the option of Java&nbsp;Script free version.
+- Created *Pages* must be exportable into standalone HTML pages with an option of Java&nbsp;Script free version.
 
 ## Non-goals
 
 - Users can't create modules themselves. Only compose *Pages* from existing modules.
 
-- Not everything will be editable. Only parts explicitly marked as editable can be accessed and changed.
+- Not everything is editable. Only elements explicitly marked as editable can be accessed and changed by a user.
 
 - Some aspects can never be changed eg. fonts and most of the typography is defined upfront for each module.
 
@@ -69,9 +69,9 @@ After in depth analysis in search of possible problem areas I decided on a set o
 
 **CLs, UI and Exporter need to share dependencies**
 : We don't want to embed external libraries into CL modules.  
-  *Firstly* this would ship external module (with its dependencies), eg. a third party gallery component, inside imported component and take away the chance for optimizing the package size in exporter.  
+  *Firstly* this would ship external libraries (with their dependencies), eg. a third party gallery component, inside imported component and take away the chance for optimizing the package size in exporter.  
   *Secondly*, in case the module creation is outsourced we need to control what libraries are being used.
 
 ## Summary
 
-Next 3 posts will describe specific elements of this system in depth and in insolation. I am going to explain how assumptions below were expressed in code. I will end the whole series with another overview - how the design of the whole system influenced each part and what was done to avoid coupling the code too tightly.
+In the next 3 posts I will describe specific elements of this system, both in depth and in insolation. I am going to explain how assumptions above were expressed in the code. I will end the whole series with another overview - how the design of the whole system influenced each of its parts, and what was done to avoid coupling the code too tightly.
