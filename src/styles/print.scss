@@ -4,7 +4,15 @@ $primary-text-color: #000;
 //
 $bg-color: #fff;
 //
-$modular-scale-base-px: 6;
+$modular-scale-base-px: 7;
+
+h1, h2, h3, h4, h5, strong, em, p code,
+h1 span, h2 span, h3 span, h4 span, h5 span {
+  background: transparent;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+}
+
 
 html {
   $base-font-size: $modular-scale-base-px * 2;
@@ -40,22 +48,32 @@ main {
   margin: 1.5cm;
 }
 
+hgroup {
+  page-break-inside: avoid;
+}
+
+h1, h2, h3 {
+  page-break-after: never;
+}
+
 h1 {
-  margin: 0;
-  font-size: to-rem(4*$modular-scale-base-px);
+  margin: 0 0 to-rem(4*$modular-scale-base-px) 0;
+  font-size: to-rem(6*$modular-scale-base-px);
 }
 
 h2 {
-  margin: to-rem(1*8) 0;
-  font-size: to-rem(3*$modular-scale-base-px);
+  margin: to-rem(2*$modular-scale-base-px) 0;
+  font-size: to-rem(4*$modular-scale-base-px);
 }
 
 h3 {
+  margin: to-rem(2*$modular-scale-base-px) 0;
   font-weight: bolder;
   font-size: to-rem(3*$modular-scale-base-px);
 }
 
 h4 {
+  margin: to-rem(2*$modular-scale-base-px) 0;
   font-weight: normal;
   font-style: italic;
   margin: 0;
@@ -68,6 +86,10 @@ h5 {
   font-size: to-rem(3*$modular-scale-base-px);
 }
 
+p {
+  margin: to-rem(2*$modular-scale-base-px) 0 to-rem(8*$modular-scale-base-px);
+}
+
 img {
   max-width: 100%;
 }
@@ -75,6 +97,10 @@ img {
 a {
   text-decoration: none;
   color: $primary-text-color;
+}
+
+hr {
+  border-color: transparent;
 }
 
 .hide-print {

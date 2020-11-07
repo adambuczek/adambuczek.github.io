@@ -11,6 +11,8 @@ excerpt: "An overview and introduction to a case study - building Vue based webs
 image: /assets/builder.png
 ---
 
+Building a UI that allows creating and/or editing web pages is a task I took up at least once at every job I had. It was never easy and always added complexity — not only on top of the web page itself but also by requiring additional back end for HTML rendering. Today this complexity is already there in a form of modern UI libraries and build tools.
+
 We needed to create an application that allows users to build simple web pages in two flavours:
  - only HTML and CSS files allowed
  - some interactivity is allowed (tabs, sliders, accordions etc.)
@@ -74,4 +76,4 @@ After in depth analysis in search of possible problem areas I decided on a set o
 
 ## Summary
 
-In the next 3 posts I will describe specific elements of this system, both in depth and in insolation. I am going to explain how assumptions above were expressed in the code. I will end the whole series with another overview - how the design of the whole system influenced each of its parts, and what was done to avoid coupling the code too tightly.
+In the next 3 posts I will describe specific elements of this system, both in depth and in insolation. I am going to explain how assumptions above were expressed in the code. I will end the whole series with another overview — how the design of the whole system influenced each of its parts, and what was done to avoid coupling the code too tightly.
