@@ -9,6 +9,7 @@ tags:
 published: true
 codepen: https://codepen.io/adambuczek/pen/NeVxWE
 excerpt: A comparison of two ways of component composition in React. Based on adding runtime data filtering to HTML table.
+image: /assets/react-render-props-and-hoc.png
 ---
 
 ## Filtering with Render Props and HOC

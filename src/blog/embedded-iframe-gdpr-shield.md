@@ -7,6 +7,7 @@ tags:
  - iframe
 published: true
 excerpt: An ad hoc GDPR compliant way of embedding third-party services that may set cookies. 
+image: /assets/embedded-iframe-gdpr-shield.png
 ---
 Under General Data Protection Regulation and Privacy and Electronic Communications Regulations you must get user's consent prior to setting cookies on his device.
 

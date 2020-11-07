@@ -7,6 +7,7 @@ tags:
  - javascript
 published: true
 excerpt: Showcase of what `this` means in given context. Difference between strict and sloppy modes.
+image: /assets/about-this.png
 ---
 
 `this` in JavaScript behaves differently based on current code context and execution mode.
