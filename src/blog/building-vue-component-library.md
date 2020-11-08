@@ -10,195 +10,153 @@ published: false
 excerpt: Creating a Vue component library with multiple output files without ejecting Vue CLI setup.
 ---
 
-### Component Libraries
-We decided to create a Vue component library which leverages Vue CLI `--library` build option as it did exactly what we wanted with very little customization.
+> Example library is available in [adambuczek/example-vue-component-library](https://github.com/adambuczek/example-vue-component-library).
 
-The components themselves need editable fields that can be edited via props. We created a boilerplate Component Library with storybook configured for convenient development. Stories can use knobs to make sure that everything that needs to be editable is.
+This is the first element of [Vue based website builder](../vue-website-builder): the component library — a source of *Modules* that can be loaded at runtime via HTTP when they are needed.
 
-Vue CLI config doesn't allow for multiple entry/output pairs. We wanted to build components separately to request then independently at runtime.
+## Standardization and metadata
 
-#### Build process
-
-To achieve this each components comes with its own `manifest.json` file which serves as a source of component's metadata.
+To be referenced from the outside each component needs additional data attached to it. This data is later combined into library manifest that lists all of available *Modules*.  
+I decided on `manifest.json` file per component:
 
 ```json
-// src/components/Description/manifest.json
 {
-  "displayName": "Description",
-  "name": "description-component",
-  "thumbnail": "./screenshot.png"
+  "displayName": "Page Title",
+  "name": "page-title",
+  "img": "thumb.png",
+  "props": [ "text" ]
 }
 ```
 
-Display name and thumbnail are used to represent the component before it's fetched and  registered. Name is used by the build process and by the component itself. Names must always be hyphenated according to [Custom Element](https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-core-concepts) spec and [Vue style guide](https://vuejs.org/v2/style-guide/#Multi-word-component-names-essential).
+They serve as a source of truth about a *Module* accessible from anywhere. It is then used in the components `<script>`:
 
 ```js
-// src/components/Description/index.vue
-import meta from './manifest.json'
+import { name, props } from './manifest.json'
 
 export default {
-  name: meta.name,
-  props: {
-    description: {
-      type: String,
-      default: 'description'
-    },
-  },
+  name,
+  props
 }
 ```
 
-The build process happens in two steps.
+This way the manifest alone provides almost all the data needed to work with the *Module*. It doesn't have the component itself but provides a way of accessing it.
 
-First collects all the component metadata and joins it into a single JSON. [Fast glob](https://github.com/mrmlnc/fast-glob) is used to find and iterate over all modules, copy the thumbnail to output path, update its url and save a path of main component entry file for use in actual build step.
+`img` and `displayName` are cosmetic and informational, they will represent the component in a user friendly way.
 
-```js
-const fs = require('fs')
-const path = require('path')
-const fg = require('fast-glob')
+`props` list is used to create control elements that can inject the content into the component. I will talk about it in the next post.
 
-const ensureDirectory = directory => {
-  if (!fs.existsSync(directory)) {
-    fs.mkdirSync(directory)
-  }
-}
+`name` is what Vue sees internally and must always be hyphenated according to [Custom Element](https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-core-concepts) spec and [Vue style guide](https://vuejs.org/v2/style-guide/#Multi-word-component-names-essential).
 
-const copyThumbnail = (componentDir, thumbnail, name) => {
-  const imgInputPath = path.resolve(componentDir, thumbnail)
-  const newFilename = `${name}-${path.basename(thumbnail)}`
-  const imgOutputPath = path.resolve(OUTPUT_PATH, newFilename)
-  
-  fs.copyFileSync(imgInputPath, imgOutputPath)
-  // Windows compatibility: Replace possible '\'
-  return imgOutputPath.replace(/\\/g, '/')
-}
+Example standardized components looks like this in the directory tree:
+```bash
+src
+├── components
+│   ├── CaptionedImage
+│   │   ├── index.vue
+│   │   ├── manifest.json
+│   │   └── thumb.png
+│   ├── PageTitle
+│   │   ├── index.vue
+│   │   ├── manifest.json
+│   │   └── thumb.png
+│   └── ThreeColumnText
+│       ├── index.vue
+│       ├── manifest.json
+│       └── thumb.png
+```
+Those are very simple but they can have any functionality a Vue 2 application can.
 
-const OUTPUT_DIR = 'dist'
-const PACKAGE_PATH = path.resolve('package.json')
-const OUTPUT_PATH = path.resolve(OUTPUT_DIR)
+## Build process
 
-const packageMetadata = require(PACKAGE_PATH)
+Build process happens in 2 steps:
 
-const manifest = {
-  name: packageMetadata.name,
-  version: packageMetadata.version,
-  components: []
-}
+### Manifest
 
-const componentManifests = fg.sync('src/components/**/manifest.json')
+All components' manifests are gathered and joined into a single `manifest.json`. I used [fast-glob](https://www.npmjs.com/package/fast-glob) to find all manifests.
 
-ensureDirectory(OUTPUT_PATH)
+This step also takes care of copying component images to the output directory.
 
-componentManifests.forEach(manifestPath => {
-  const componentDir = path.dirname(manifestPath)
-  const componentManifest = require(path.resolve(manifestPath))
-  const { name, thumbnail } = componentManifest
+Full `create-manifest.js` script is [here](https://github.com/adambuczek/example-vue-component-library/blob/master/scripts/create-manifest.js).
 
-  componentManifest.thumbnail =
-    copyThumbnail(componentDir, thumbnail, name)
-  componentManifest.src =
-    manifestPath.replace('manifest.json', 'index.vue')
 
-  manifest.components.push(componentManifest)
-})
+### Build
 
-const manifestOutputPath = path.resolve(OUTPUT_PATH, 'manifest.json')
+Vue CLI config doesn't allow for multiple entry/output pairs. I wanted to build components separately to be able to request then independently at runtime. Build process uses generated `manifest.json` to identify entry files. This step also fills the manifest file with paths to compiled files relative to the manifest itself.
 
-fs.writeFileSync(
-  manifestOutputPath,
-  JSON.stringify(manifest, null, 2)
-)
+My solution is based on [Markus Oberlehners article](https://markus.oberlehner.net/blog/distributed-vue-applications-loading-components-via-http/). He describes how to use Vue CLI to build a single component.
+
+```bash
+vue-cli-service build --target lib \
+  --formats umd-min --no-clean \
+  --dest outputDir --name componentName inputFilePath
 ```
 
-This creates a basic library manifest with exported thumbnail path thats relative to
-manifest file. Additionally component entry file is listed in `src` field. This
-is used in next step.
+Based on this I created a script that uses the data from the manifest file to trigger building multiple components in parallel. Full `build.js` script is [here](https://github.com/adambuczek/example-vue-component-library/blob/master/scripts/build.js).
+
+Components in UMD format are exposed as global variables when executed in a browser, as long as Vue also is a global variable. [Markus](https://markus.oberlehner.net/blog/distributed-vue-applications-loading-components-via-http/) provides a pattern that leverages this property and I will use it in the UI to register components.
+
+The manifest looks like this after the build step:
 
 ```json
 {
-  "name": "component-library-boilerplate",
-  "version": "0.0.1",
+  "name": "example-vue-component-library",
+  "version": "0.1.0",
   "components": [
     {
-      "displayName": "Description",
-      "name": "description-component",
-      "thumbnail": "description-component-screenshot.png",
-      "src": "src/components/Description/index.vue"
+      "displayName": "Captioned Image",
+      "name": "captioned-image",
+      "img": "captioned-image-thumb.png",
+      "props": [
+        "url",
+        "alt",
+        "caption"
+      ],
+      "src": "src/components/CaptionedImage/index.vue",
+      "style": "captioned-image.css",
+      "script": "captioned-image.umd.min.js",
+      "map": "captioned-image.umd.min.js.map"
+    },
+    {
+      "displayName": "Page Title",
+      "name": "page-title",
+      "img": "page-title-thumb.png",
+      "props": [
+        "text"
+      ],
+      "src": "src/components/PageTitle/index.vue",
+      "style": "page-title.css",
+      "script": "page-title.umd.min.js",
+      "map": "page-title.umd.min.js.map"
+    },
+    {
+      "displayName": "Three Column Text",
+      "name": "three-column-text",
+      "img": "three-column-text-thumb.png",
+      "props": [
+        "text"
+      ],
+      "src": "src/components/ThreeColumnText/index.vue",
+      "style": "three-column-text.css",
+      "script": "three-column-text.umd.min.js",
+      "map": "three-column-text.umd.min.js.map"
     }
   ]
 }
 ```
-Second step uses the created manifest to build components with Vue CLI. There is no public Node API so we use `exec` to execute multiple build processes in parallel. And pass `src` and `name` for each component.
+This is an actual entry point of this component library. This is a set of data that can fetch and use any component built here.
 
-```js
-const fs = require('fs')
-const path = require('path')
-const { exec } = require('child_process')
+## Components server
 
-const OUTPUT_DIR = 'dist'
-const OUTPUT_PATH = path.resolve(OUTPUT_DIR)
-
-const manifestPath = path.resolve(OUTPUT_PATH, 'manifest.json')
-const manifest = require(manifestPath)
-
-const createLogger = (label = '') =>
-  data => console.log(`${label}: ${data.toString()}`)
-
-const createBuildCommand = (input, output) => {
-  const command = [
-    'npx', 'vue-cli-service', 'build',
-      '--target', 'lib',
-      '--formats', 'umd-min',
-      '--no-clean',
-      '--dest', OUTPUT_PATH,
-      '--name', input,
-      output
-  ]
-  
-  return command.join(' ')
-}
-
-const stdoutLog = createLogger('stdout')
-const stderrLog = createLogger('stderr')
-
-const components = manifest.components.slice()
-
-manifest.components = []
-
-components.forEach(component => {
-  const input = component.src
-  const output = component.name
-
-  const command = createBuildCommand(output, input)
-  
-  try {
-    const buildProcess = exec(command, (error, stdout, stderr) =>
-      if (error) throw error
-      stderrLog(stderr)
-      stdoutLog(stdout)
-    )
-    buildProcess.stdout.on('data', stdoutLog)
-    buildProcess.stderr.on('data', stderrLog)
-  } catch (error) { 
-    console.error(error)
-    process.exit(1)
-  }
-
-  const [ style, script, map ] = [
-    'css',
-    'umd.min.js',
-    'umd.min.js.map'
-  ].map(extension => `${component.name}.${extension}`)
-
-  manifest.components.push({
-    ...component,
-    style, script, map
-  })
-})
-
-fs.writeFileSync(
-  manifestPath,
-  JSON.stringify(manifest, null, 2)
-)
+For development a simple static files server will do. I am using `http-serve` via `npx`. It is defined in `package.json` as `serve-dist`:
+```bash
+npx http-serve --cors dist -p 8888
 ```
-This setup along with proper `files` field setting in `package.json` lets us install
-this package in another app and import components when they are needed.
+This serves dist directory on port 8888 with loose cors settings — in case the client app runs on a custom domain.
+
+## Summary
+
+Vue CLI via the power of UMD gives us an easy way of building independent Vue components. Right now its only a command line option but this hopefully [changes in the future](https://github.com/vuejs/vue-cli/issues/3922).
+
+Apart from that Vue CLI configuration is very extensible and so is Vue Single File Components syntax. There is an example component library [Hello Vue Components](https://github.com/chrisvfritz/hello-vue-components) authored by Chris Fritz which illustrates a case where additional metadata is kept inside vue files. That's an idea worth exploring.
+
+In the next part I will build an example app that uses the components created here straight from static files server.
