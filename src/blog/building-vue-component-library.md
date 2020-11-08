@@ -8,6 +8,7 @@ tags:
  - javascript
 published: false
 excerpt: Creating a Vue component library with multiple output files without ejecting Vue CLI setup.
+image: /assets/building-vue-component-library.png
 ---
 
 > Example library is available in [adambuczek/example-vue-component-library](https://github.com/adambuczek/example-vue-component-library).
