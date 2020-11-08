@@ -42,7 +42,7 @@ main {
   margin: to-rem(6*$modular-scale-base-px) auto;
 }
 
-h1, h2, h3, h4, h5, strong, em, p code,
+h1, h2, h3, h4, h5, strong, em, p code, li code,
 h1 span, h2 span, h3 span, h4 span, h5 span {
   background: $accent;
   background-clip: text;
