@@ -11,13 +11,14 @@ excerpt: Creating a Vue component library with multiple output files without eje
 image: /assets/building-vue-component-library.png
 ---
 
-> Example library is available in [adambuczek/example-vue-component-library](https://github.com/adambuczek/example-vue-component-library).
+This is the first element of [Vue based website builder](../vue-website-builder) is a component library — a source of *Modules* that can be loaded at runtime via HTTP when they are needed.
 
-This is the first element of [Vue based website builder](../vue-website-builder): the component library — a source of *Modules* that can be loaded at runtime via HTTP when they are needed.
+> An example library is available in [adambuczek/example-vue-component-library](https://github.com/adambuczek/example-vue-component-library).
 
 ## Standardization and metadata
 
-To be referenced from the outside each component needs additional data attached to it. This data is later combined into library manifest that lists all of available *Modules*.  
+To be referenced from the outside, each component needs an additional set of data attached to it. The data from all the components is later combined into library manifest listing all available *Modules*.
+
 I decided on `manifest.json` file per component:
 
 ```json
@@ -29,7 +30,7 @@ I decided on `manifest.json` file per component:
 }
 ```
 
-They serve as a source of truth about a *Module* accessible from anywhere. It is then used in the components `<script>`:
+These files serve as a source of truth about each *Module* and are accessible from anywhere. They are also used in the components' `<script>`:
 
 ```js
 import { name, props } from './manifest.json'
@@ -40,9 +41,9 @@ export default {
 }
 ```
 
-This way the manifest alone provides almost all the data needed to work with the *Module*. It doesn't have the component itself but provides a way of accessing it.
+This way the manifest alone provides almost all of the data needed to work with the *Module*. It doesn't contain the component itself but provides a way to access it.
 
-`img` and `displayName` are cosmetic and informational, they will represent the component in a user friendly way.
+`img` and `displayName` are mainly cosmetic and informational, and also represent the component in a user-friendly way.
 
 `props` list is used to create control elements that can inject the content into the component. I will talk about it in the next post.
 
@@ -82,9 +83,9 @@ Full `create-manifest.js` script is [here](https://github.com/adambuczek/example
 
 ### Build
 
-Vue CLI config doesn't allow for multiple entry/output pairs. I wanted to build components separately to be able to request then independently at runtime. Build process uses generated `manifest.json` to identify entry files. This step also fills the manifest file with paths to compiled files relative to the manifest itself.
+Vue CLI config doesn't allow for multiple entry/output pairs. I wanted to build components separately to be able to request them independently at runtime. Build process uses generated `manifest.json` to identify entry files. This step also fills the manifest file with paths to compiled files relative to the manifest itself.
 
-My solution is based on [Markus Oberlehners article](https://markus.oberlehner.net/blog/distributed-vue-applications-loading-components-via-http/). He describes how to use Vue CLI to build a single component.
+My solution is based on [Markus Oberlehner's article](https://markus.oberlehner.net/blog/distributed-vue-applications-loading-components-via-http/). He describes how to use Vue CLI to build a single component.
 
 ```bash
 vue-cli-service build --target lib \
@@ -148,7 +149,7 @@ This is an actual entry point of this component library. This is a set of data t
 
 ## Components server
 
-For development a simple static files server will do. I am using `http-serve` via `npx`. It is defined in `package.json` as `serve-dist`:
+For development a simple static files server will suffice. I am using `http-serve` via `npx`. It is defined in `package.json` as `serve-dist`:
 ```bash
 npx http-serve --cors dist -p 8888
 ```
@@ -156,8 +157,8 @@ This serves dist directory on port 8888 with loose cors settings — in case the
 
 ## Summary
 
-Vue CLI via the power of UMD gives us an easy way of building independent Vue components. Right now its only a command line option but this hopefully [changes in the future](https://github.com/vuejs/vue-cli/issues/3922).
+Vue CLI via the power of UMD gives us a way of building independent Vue components. Right now its only a command line option but hopefully it is going to [change in the future](https://github.com/vuejs/vue-cli/issues/3922).
 
-Apart from that Vue CLI configuration is very extensible and so is Vue Single File Components syntax. There is an example component library [Hello Vue Components](https://github.com/chrisvfritz/hello-vue-components) authored by Chris Fritz which illustrates a case where additional metadata is kept inside vue files. That's an idea worth exploring.
+Apart from that Vue CLI configuration is very extensible and so is Vue Single File Components syntax. There is an example component library [Hello Vue Components](https://github.com/chrisvfritz/hello-vue-components) authored by Chris Fritz which illustrates a case where additional metadata is kept inside vue files. This idea is certainly worth exploring.
 
-In the next part I will build an example app that uses the components created here straight from static files server.
+In the next part I will build an example app that uses the components created here straight from a static files server.

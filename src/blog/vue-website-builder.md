@@ -11,7 +11,7 @@ excerpt: "An overview and introduction to a case study - building Vue based webs
 image: /assets/builder.png
 ---
 
-Building a UI that allows creating and/or editing web pages is a task I took up at least once at every job I had. It was never easy and always added complexity — not only to the web page itself but also by requiring additional back end for HTML rendering. Today this complexity is already there in a form of modern UI libraries and build tools.
+Building a UI that allows creating and/or editing web pages is a task I took up at least once at every job I had. It always added complexity — not only to the web page itself but also by requiring additional back end for HTML rendering. Today this complexity is already there in a form of modern UI libraries and build tools.
 
 We will create an application that allows users to build simple web pages from preexisting parts.
 
@@ -19,7 +19,7 @@ We will create an application that allows users to build simple web pages from p
 
 ## The goals
 
-- End users should be presented with an easy to use drag-and-drop interface.
+- End users should be presented with a drag-and-drop interface.
 
 - UI should allow users to edit the content in imported *Modules*: edit text (with and without formatting), add and change images etc.
 
