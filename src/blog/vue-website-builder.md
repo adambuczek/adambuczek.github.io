@@ -11,7 +11,7 @@ excerpt: "An overview and introduction to a case study - building Vue based webs
 image: /assets/builder.png
 ---
 
-Building a UI that allows creating and/or editing web pages is a task I took up at least once at every job I had. It always added complexity — not only to the web page itself but also by requiring additional back end for HTML rendering. Today this complexity is already there in a form of modern UI libraries and build tools.
+Building a UI that allows creating and/or editing web pages is a task I took up at least once at every job I had. It always adds complexity — not only to the web page itself but also by requiring additional back end for HTML rendering. Today this complexity is already there in a form of modern UI libraries and build tools.
 
 We will create an application that allows users to build simple web pages from preexisting parts.
 
@@ -21,7 +21,7 @@ We will create an application that allows users to build simple web pages from p
 
 - End users should be presented with a drag-and-drop interface.
 
-- UI should allow users to edit the content in imported *Modules*: edit text (with and without formatting), add and change images etc.
+- The UI should allow users to edit the content in imported *Modules* — edit text (with and without formatting), add and change images etc.
 
 - Users can rearrange *Modules* in edit view.
 
@@ -29,7 +29,7 @@ We will create an application that allows users to build simple web pages from p
 
 - CSS should not leak to or out of the main app.
 
-- New *Modules* can be created in a matter of hours - making them available in the UI should not require whole app to be redeployed.
+- New *Modules* can be created in a matter of hours — making them available in the UI should not require whole app to be redeployed.
 
 - Created *Pages* must be exportable into standalone HTML pages with an option of Java&nbsp;Script free version.
 
@@ -59,7 +59,7 @@ System composed of 3 parts:
 After in depth analysis in search of possible problem areas I decided on a set of prerequisites:
 
 **Modules in Component Libraries must adhere to a standard**
-: Editable elements must be identifiable and accessible for UI to inject event handlers.
+: Editable props must be identifiable and accessible for UI to inject data.
 
 **UI and Exporter need a shared protocol**
 : It has to fully express what the *Page* is. Data validation on both ends will greatly reduce hard to find bugs.
@@ -74,4 +74,4 @@ After in depth analysis in search of possible problem areas I decided on a set o
 
 ## Summary
 
-In the next 3 posts I will describe specific elements of this system, both in depth and in insolation. I am going to explain how assumptions above were expressed in the code. I will end the whole series with another overview — how the design of the whole system influenced each of its parts, and what was done to avoid coupling the code too tightly.
+In the next 3 posts I will describe specific elements of this system, both in depth and in insolation. I am going to explain how assumptions above were expressed in the code. I will finish the whole series with another overview — how the design of the whole system influenced each of its parts, and what was done to avoid coupling the code too tightly.
