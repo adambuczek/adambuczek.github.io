@@ -10,8 +10,14 @@ published: false
 excerpt: Creating a Vue component library with multiple output files without ejecting Vue CLI setup.
 image: /assets/building-vue-component-library.png
 ---
+This is the first element of [Vue based website builder](../vue-website-builder) — a component library, source of *Modules* that can be loaded at runtime via HTTP when they are needed.
 
-This is the first element of [Vue based website builder](../vue-website-builder) is a component library — a source of *Modules* that can be loaded at runtime via HTTP when they are needed.
+As stated earlier [Component Libraries must adhere to a standard](../vue-website-builder/#basic-assumptions). Lifecycle of a component looks like this:
+- All accessible components are listed in the UI.
+- A component is chosen from the list and added to a main area.
+- Component's content can be edited; component can be rearranged.
+
+To sum up — components must be listable, addable and editable in a standardized way. Here is how I have done it.
 
 > An example library is available in [adambuczek/example-vue-component-library](https://github.com/adambuczek/example-vue-component-library).
 
@@ -43,11 +49,11 @@ export default {
 
 This way the manifest alone provides almost all of the data needed to work with the *Module*. It doesn't contain the component itself but provides a way to access it.
 
-`img` and `displayName` are mainly cosmetic and informational, and also represent the component in a user-friendly way.
+Listable — `img` and `displayName` are mainly cosmetic and informational, and also represent the component in a user-friendly way.
 
-`props` list is used to create control elements that can inject the content into the component. I will talk about it in the next post.
+Addable — `name` is what Vue sees internally and must always be hyphenated according to [Custom Element](https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-core-concepts) spec and [Vue style guide](https://vuejs.org/v2/style-guide/#Multi-word-component-names-essential).
 
-`name` is what Vue sees internally and must always be hyphenated according to [Custom Element](https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-core-concepts) spec and [Vue style guide](https://vuejs.org/v2/style-guide/#Multi-word-component-names-essential).
+Editable — `props` list is used to create control elements that can inject the content into the component. I will talk about it in the next post.
 
 Example standardized components looks like this in the directory tree:
 ```bash

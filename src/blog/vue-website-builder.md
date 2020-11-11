@@ -37,7 +37,7 @@ We will create an application that allows users to build simple web pages from p
 
 - Users can't create modules themselves. Only compose *Pages* from existing modules.
 
-- Not everything is editable. Only elements explicitly marked as editable can be accessed and changed by a user.
+- Not everything is editable. Only elements explicitly marked as editable can be accessed and changed by a user. 
 
 - Some aspects can never be changed eg. fonts and most of the typography is defined upfront for each module.
 
@@ -54,7 +54,7 @@ System composed of 3 parts:
 **Exporter**
 : A Node server. This will export *Pages* as standalone web pages.
 
-### Basic assumptions
+### Basic assumptions<a name="basic-assumptions"></a>
 
 After in depth analysis in search of possible problem areas I decided on a set of prerequisites:
 
