@@ -15,7 +15,7 @@ This is the first element of [Vue based website builder](../vue-website-builder)
 As stated earlier [Component Libraries must adhere to a standard](../vue-website-builder/#basic-assumptions). Lifecycle of a component looks like this:
 - All accessible components are listed in the UI.
 - A component is chosen from the list and added to a main area.
-- Component's content can be edited; component can be rearranged.
+- Component's content can be edited; components can be rearranged.
 
 To sum up — components must be listable, addable and editable in a standardized way. Here is how I have done it.
 
@@ -101,7 +101,7 @@ vue-cli-service build --target lib \
 
 Based on this I created a script that uses the data from the manifest file to trigger building multiple components in parallel. Full `build.js` script is [here](https://github.com/adambuczek/example-vue-component-library/blob/master/scripts/build.js).
 
-Components in UMD format are exposed as global variables when executed in a browser, as long as Vue also is a global variable. [Markus](https://markus.oberlehner.net/blog/distributed-vue-applications-loading-components-via-http/) provides a pattern that leverages this property and I will use it in the UI to register components.
+Components in UMD format are exposed as global variables when executed in a browser, as long as Vue also is a global variable. [Markus](https://markus.oberlehner.net/blog/distributed-vue-applications-loading-components-via-http/) provides a pattern that leverages this property and I will [use it in the UI to register components](../building-vue-apps-in-vue-app/).
 
 The manifest looks like this after the build step:
 

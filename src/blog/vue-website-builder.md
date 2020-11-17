@@ -1,12 +1,12 @@
 ---
 layout: note.njk
 title: Vue website builder
-date: 2020-10-01
+date: 2020-11-17
 tags: 
- - draft
+ - note
  - vue
  - javascript
-published: false
+published: true
 excerpt: "An overview and introduction to a case study - building Vue based websites inside a Vue application."
 image: /assets/builder.png
 ---
