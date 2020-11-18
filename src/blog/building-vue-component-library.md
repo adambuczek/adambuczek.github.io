@@ -21,7 +21,7 @@ To sum up — components must be listable, addable and editable in a standardize
 
 > An example library is available in [adambuczek/example-vue-component-library](https://github.com/adambuczek/example-vue-component-library).
 
-## Standardization and metadata
+## Standardization and metadata<a name="standardization-and-metadata"></a>
 
 To be referenced from the outside, each component needs an additional set of data attached to it. The data from all the components is later combined into library manifest listing all available *Modules*.
 
