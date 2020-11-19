@@ -29,8 +29,6 @@ export default async function externalComponent(url) {
   const name = url.split('/').reverse()[0].match(/^(.*?)\.umd/)[1]
 
    // The registered component will be a global object.
-   // Window[component] serves as a cache — each is
-   // loaded once, when it is first used. 
   if (window[name]) return window[name]
 
    // We save a promise where the component will be in the future
@@ -48,7 +46,7 @@ export default async function externalComponent(url) {
   
        // This seems like we were trying to resolve the promise with
        // itself which wouldn't work but when the load event fires
-       // window[component]'s value is already a Vue component.
+       // window[name]'s value is already a Vue component.
     
       resolve(window[name])
     })
@@ -73,9 +71,9 @@ This way multiple component libraries may be used without over-bloating the app.
 
 ### Mounting components in isolation
 
-Imported components' styles need to be separated from the rest of the app. They need to be editable and reorderable. I mount them into new instances of Vue inside ShadowDOM root. CSS styles are injected next to new app root.
+Imported components' styles need to be separated from the rest of the app. They need to be editable and reorderable. I mount them into new instances of Vue inside [ShadowDOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) root. CSS styles are injected next to new app root.
 
-To achieve this components are wrapped in ListItem that creates a single component Vue app on mount. Initial, empty props (declared in the manifest) are passed to ensure their reactivity.
+To achieve this components are wrapped in ListItem that creates a single component Vue app on mount. Initial, empty props (declared in the manifest) are passed to ensure their reactivity later.
 
 ```js
 const ListItem = {
@@ -140,4 +138,6 @@ This data structure can be sent to an exporter which I am going to describe in t
 
 ## Summary
 
-Next time I am going to build a Node backend that uses a custom webpack configuration to process JSON data into standalone websites.
+Web app building web app is ready. Although it lacks polish I can now create a simplistic web pages from parts I prepared earlier. The modules are also uncomplicated and lack interactivity but remember that we have whole functionality of Vue 2 to work with — this fact lets us create a system as robust as needed to be used with no knowledge of web development.
+
+Next time I am going to build a Node backend that uses a custom webpack configuration to process JSON data into standalone websites and serve a preview.
