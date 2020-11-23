@@ -1,12 +1,12 @@
 ---
 layout: note.njk
 title: Async component library with Vue
-date: 2020-10-02
+date: 2020-11-23
 tags: 
- - draft
+ - note
  - vue
  - javascript
-published: false
+published: true
 excerpt: Creating a Vue component library with multiple output files without ejecting Vue CLI setup.
 image: /assets/building-vue-component-library.png
 ---
