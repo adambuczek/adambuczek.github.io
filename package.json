@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "gulp",
-    "build-gh": "gulp && mv dist/* . && git checkout origin/master CNAME",
+    "clean": "rm -rf assets blog iframe styles dist",
+    "build-gh": "npm run clean && npm run build && mv dist/* . && git checkout origin/master CNAME",
     "develop": "gulp develop",
     "test": "jest --watch *.test.js",
     "md2pug": "node md2pug.js"
