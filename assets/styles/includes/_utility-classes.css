@@ -1,0 +1,21 @@
+.dotted-border {
+  border: 1px dotted #808080;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.mt-0 {
+  margin-top: 0;
+}

@@ -1,0 +1,233 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="/assets/styles/critical.css" rel="stylesheet" type="text/css">
+    <title>Adam Buczek | About `this`</title>
+    <meta name="description" content="Showcase of what `this` means in given context. Difference between strict and sloppy modes.">
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Adam Buczek</a></li>
+        |
+        <li><a href="/notes">Notes</a></li>
+      </ul>
+    </nav>
+
+    <main role="main" class="page--note">
+      
+      <h1>About `this`</h1>
+      <p><code>this</code> in JavaScript behaves differently based on current code context and execution mode.</p>
+<h2 id="global-functions">Global functions</h2>
+<h3 id="sloppy-mode">Sloppy mode</h3>
+<p>In Node 10 regular function created in global scope has <code>this</code> pointing to global object. Arrow function created in the same context logs <code>{}</code>. The same set of cases in browser always gives the global <code>window</code>. This also applies to <code>this</code> inside an arrow function but not regular function.</p>
+<pre><code class="language-js">// Node.js 10 / browser
+console.log(this)
+// {} / window
+
+(function() { console.log(this) })()
+// global / window
+
+(() =&gt; { console.log(this) })()
+// {} / window
+
+(function() { 
+    (function() { console.log(this) })()
+    // global / window
+
+    (() =&gt; { console.log(this) })()
+    // global / window
+    
+})()
+
+(() =&gt; { 
+    (function() { console.log(this) })()
+    // global / window
+
+    (() =&gt; { console.log(this) })()
+    // {} / window
+
+})()
+</code></pre>
+<h3 id="strict-mode">Strict mode</h3>
+<p>Strict mode is more predictable as <code>this</code> is undefined in global scope.</p>
+<pre><code class="language-js">(function(){
+    'use strict'
+
+    console.log(this)
+    // undefined
+
+    (function() { console.log(this) })()
+    // undefined
+
+    (() =&gt; { console.log(this) })()
+    // undefied
+
+    (function() { 
+        (function() { console.log(this) })()
+        // undefined
+
+        ;(() =&gt; { console.log(this) })()
+        // undefined
+    
+    })()
+
+    (() =&gt; { 
+        (function() { console.log(this) })()
+        // undefined
+
+        (() =&gt; { console.log(this) })()
+        // undefined
+
+    })()
+})()
+</code></pre>
+<h2 id="functions-defined-as-object-properties">Functions defined as object properties</h2>
+<h3 id="sloppy-mode-1">Sloppy mode</h3>
+<p>Arrow function points to global object because it was bound on creation time. Function bound on creation time behaves the same as arrow function. Regular function logs object because <code>this</code> is looked up at execution, if I remove it from object using <code>obj.returnFn()()</code> it no longer logs the object.</p>
+<pre><code class="language-js">const obj = {
+    aaa: 111,
+    bbb: 222,
+    ccc: 333,
+    _this: this,
+    afn: () =&gt; console.log(this),
+    bfn: (function bfn() { console.log(this) }).bind(this),
+    fn: function fn() { console.log(this) },
+    returnFn: function() { return this.fn },
+    returnAfn: function() { return this.afn },
+    returnBfn: function() { return this.bfn },
+}
+
+obj.afn() // {} / window
+obj.bfn() // {} / window
+obj.fn() // obj
+
+obj.returnFn()() // global / window
+obj.returnAfn()() // {} / window
+obj.returnBfn()() // {} / window
+</code></pre>
+<h3 id="strict-mode-1">Strict mode</h3>
+<pre><code class="language-js">(function(){
+    'use strict'
+    const obj = {
+        aaa: 111,
+        bbb: 222,
+        ccc: 333,
+        _this: this,
+        afn: () =&gt; console.log(this),
+        bfn: (function bfn() { console.log(this) }).bind(this),
+        fn: function fn() { console.log(this) },
+        returnFn: function() { return this.fn },
+        returnAfn: function() { return this.afn },
+        returnBfn: function() { return this.bfn },
+    }
+    
+    obj.afn() // undefined
+    obj.bfn() // undefined
+    obj.fn() // obj
+    
+    obj.returnFn()() // undefined
+    obj.returnAfn()() // undefined
+    obj.returnBfn()() // undefined
+})()
+</code></pre>
+<h2 id="function-defined-object-type">Function defined object type</h2>
+<h3 id="sloppy-and-strict-modes">Sloppy and strict modes</h3>
+<p>Arrow function and regular function point to the same <code>this</code> value when called from an object's instance. If the constructor returned <code>this</code> directly (by default or explicitly). When a new object is returned and filled with <code>...this</code> arrow functions still points to the original function and can act as a static function.<br>
+Function removed from parent object context lose <code>this</code> unless bound.</p>
+<pre><code class="language-js">function FunctionDefiedObjectType() {
+    this.type = 'I am a function!'
+    this.data = 111
+    this.fn = function() { console.log(this) }
+    this.afn = () =&gt; console.log(this)
+
+    this.returnFn = function() { return this.fn }
+    this.returnAfn = function() { return this.afn }
+
+    return this
+}
+
+function FunctionDefiedObjectType2() {
+    FunctionDefiedObjectType.apply(this)
+    this.type = 'I am an extended function!'
+    return {
+        ...this
+    }
+}
+
+const fdot = new FunctionDefiedObjectType()
+const fdot2 = new FunctionDefiedObjectType2()
+
+fdot.type = 'I am an instance!'
+fdot2.type = 'I am a second instance!'
+
+fdot.fn() // I am an instance!
+fdot.returnFn()() // undefined
+
+fdot.afn() // I am an instance!
+fdot.returnAfn()() // I am an instance!
+
+fdot2.fn() // I am a second instance!
+fdot2.returnFn()() // undefined
+
+fdot2.afn() // I am an extended function!
+fdot2.returnAfn()() // I am an extended function!
+</code></pre>
+<h2 id="class">Class</h2>
+<h3 id="sloppy-and-strict-modes-1">Sloppy and strict modes</h3>
+<p>Class function properties and methods must be bound to class instance if they are to be used outside of class.</p>
+<pre><code class="language-js">class Class {
+    constructor () {
+        this.type = 'I am a constructor!'
+        this.fn = function() { console.log(this) }
+        this.afn = () =&gt; console.log(this)
+        this.boundMethod = this.method.bind(this)
+    }
+    
+    method () { console.log(this) }
+    // method () =&gt; console.log(this) // this is currently illegal
+
+    returnFn () { return this.fn }
+    returnAfn () { return this.afn }
+    returnMethod () { return this.method }
+    returnBoundMethod () { return this.boundMethod }
+
+    returnSpreadThis () {
+        return {
+            ...this
+        }
+    }
+}
+
+const classInstance = new Class()
+
+classInstance.type = 'I am an instance!'
+
+classInstance.returnFn()() // undefined
+classInstance.returnAfn()() // instance
+classInstance.returnMethod()() // undefined
+classInstance.returnBoundMethod()() // instance
+
+const classInstanceCopy = classInstance.returnSpreadThis()
+// classInstanceCopy han no access to methods
+classInstanceCopy.afn() // instance
+classInstanceCopy.fn() // instance's `this` as an object (no methods)
+classInstanceCopy.boundMethod() // instance
+</code></pre>
+
+    </main>
+
+    <footer>
+      <ul>
+        <li><a href="https://github.com/adambuczek"><img src="/assets/github.svg" alt="Github"></a></li>
+      </ul>
+    </footer>
+    <link href="/assets/styles/global.css" rel="stylesheet" type="text/css">
+    <link href="/assets/styles/print.css" media="print" rel="stylesheet" type="text/css">
+  </body>
+</html>
+

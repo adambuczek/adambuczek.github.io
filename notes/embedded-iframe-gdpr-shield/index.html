@@ -1,0 +1,44 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="/assets/styles/critical.css" rel="stylesheet" type="text/css">
+    <title>Adam Buczek | Embedded Iframe GDPR Shield</title>
+    <meta name="description" content="An ad hoc GDPR compliant way of embedding third-party services that may set cookies.">
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Adam Buczek</a></li>
+        |
+        <li><a href="/notes">Notes</a></li>
+      </ul>
+    </nav>
+
+    <main role="main" class="page--note">
+      
+      <h1>Embedded Iframe GDPR Shield</h1>
+      <p>Under General Data Protection Regulation and Privacy and Electronic Communications Regulations you must get user's consent prior to setting cookies on his device.</p>
+<p>It wasn't really clear to me how to deal with 3rd party cookies created when embedding iframes.</p>
+<p>Online videos, social networking features, analytics and ad targeting... It is safe to assume that such services track a information to measure the number and behavior of users, including information that links user's visits to websites with other accounts that they are logged into. Those cookies may provide data that can be later used by those 3rd parties or other parties they work with for their own purposes, such as targeted ads or analytics.</p>
+<p>I created a snippet that blocks loading of iframes <code>src</code> until user gives their express consent.</p>
+<!-- raw HTML omitted -->
+<p>JS code iterates over all <code>iframe</code> elements and injects UI elements into them. <code>data-thumb</code> can be passed to show as blurred background until <code>iframe</code> is loaded.</p>
+<p>This method isn't ideal. It is very intrusive but helped me as a part of more robust system used on <a href="https://return2games.com/">return2games.com</a>.</p>
+<p>This is based on the solution found here: https://edps.europa.eu/press-publications/press-news/videos/cnn-regulators-probe-facebook-over-data-privacy-giovanni_en</p>
+
+    </main>
+
+    <footer>
+      <ul>
+        <li><a href="https://github.com/adambuczek"><img src="/assets/github.svg" alt="Github"></a></li>
+      </ul>
+    </footer>
+    <link href="/assets/styles/global.css" rel="stylesheet" type="text/css">
+    <link href="/assets/styles/print.css" media="print" rel="stylesheet" type="text/css">
+  </body>
+</html>
+

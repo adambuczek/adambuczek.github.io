@@ -1,0 +1,249 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="/assets/styles/critical.css" rel="stylesheet" type="text/css">
+    <title>Adam Buczek | Render Props &amp; HOC</title>
+    <meta name="description" content="A comparison of two ways of component composition in React. Based on adding runtime data filtering to HTML table.">
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Adam Buczek</a></li>
+        |
+        <li><a href="/notes">Notes</a></li>
+      </ul>
+    </nav>
+
+    <main role="main" class="page--note">
+      
+      <span><strong>DRAFT</strong></span>
+      
+      <h1>Render Props &amp; HOC</h1>
+      <h2 id="filtering-with-render-props-and-hoc">Filtering with Render Props and HOC</h2>
+<p>Render Props and Higher Order Components are ways to build reusable components and avoid data encapsulation in components. This follows the idea of dependency injection.</p>
+<p>As an example I implemented table filtering using this patterns. Here is the boilerplate code with Bootstrap 4 classes.</p>
+<p>Table component with separate <code>list</code> and <code>headers</code> props to enable rendering an empty set with only headings.</p>
+<pre><code class="language-jsx">const Table = ({ list, headers }) =&gt; {
+
+  const tableHeaders = headers.map((header, i) =&gt; (
+    &lt;th scope=&quot;col&quot; key={i}&gt;{header}&lt;/th&gt;
+  ))
+
+  const tableRows = list.map((row, i) =&gt; (
+    &lt;tr key={i}&gt;{
+        headers.map((header, j) =&gt; (
+            &lt;td key={j}&gt;{row[header]}&lt;/td&gt;
+        ))
+    }&lt;/tr&gt;
+  ))
+
+  return (
+    &lt;table className=&quot;table table-striped table-borderless&quot;&gt;
+        &lt;thead className=&quot;thead-dark&quot;&gt;
+            &lt;tr&gt;{tableHeaders}&lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;{tableRows}&lt;/tbody&gt;
+    &lt;/table&gt;
+  )
+}
+</code></pre>
+<p>Dummy data from <a href="https://jsonplaceholder.typicode.com/">JSONPlaceholder</a>.</p>
+<pre><code class="language-js">const list = fetch('https://jsonplaceholder.typicode.com/users')
+    .then(respone =&gt; respone.json())
+    .then(users =&gt; users.map(
+        user =&gt; ({
+            id: user.id, name: user.name,
+            username: user.username,
+            email: user.email,
+            website: user.website,
+            city: user.address.city,
+        })
+    )).catch(e =&gt; {
+        console.error(e)
+    })
+</code></pre>
+<p>App component with filter input and unfiltered Table.</p>
+<pre><code class="language-jsx">class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+        list: [],
+        headers: [],
+        query: &quot;&quot;
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(event) {
+        this.setState({ query: event.target.value })
+  }
+
+  componentDidMount() {
+    list
+      .then(data =&gt; {
+        this.setState({
+            list: data,
+            headers: data.length !== 0 ? Object.keys(data[0]) : []
+        })
+      })
+      .catch(e =&gt; {
+        console.info(&quot;Error fetching data&quot;)
+        console.error(e)
+      })
+  }
+
+  render() {
+    return (
+      &lt;span&gt;
+        &lt;input
+          type=&quot;text&quot;
+          placeholder=&quot;Filter&quot;
+          value={this.state.query}
+          onChange={this.handleChange}
+        /&gt;
+        &lt;Table
+          headers={this.state.headers}
+          list={this.state.list}
+        /&gt;
+      &lt;/span&gt;
+    )
+  }
+}
+</code></pre>
+<h2 id="render-props">Render Props</h2>
+<p>Filtering with component using a render prop pattern.</p>
+<p>The component gets it's own props and doesn't worry what else anything passed to <code>render</code> prop needs.</p>
+<pre><code class="language-js">const ListFilterRenderProp = props =&gt; {
+    const { list, query, render } = props
+    
+    const filteredList = list.filter(row =&gt;
+        Object.values(row).join(' ').includes(query))
+    
+    return render(filteredList)
+}
+</code></pre>
+<p>And I can swap <code>&lt;Table&gt;</code> with the code below.</p>
+<pre><code class="language-jsx">&lt;h1&gt;Render Prop:&lt;/h1&gt;
+&lt;ListFilterRenderProp
+    list={this.state.list} query={this.state.query}
+    render={
+        filtered =&gt; (
+            &lt;Table headers={this.state.headers} list={filtered}/&gt;
+        )
+    }
+/&gt;
+</code></pre>
+<p>The filtered table in App's render contains a literal component so any prop needed from app can be passed here as well. Filter component doesn't have to know anything about how the filtered data is consumed.</p>
+<p>Another way of doing this is using function as children which leverages the fact that <code>children</code> is a React prop. This is almost the same as the sample above but uses <code>children</code> in place of <code>render</code>.</p>
+<pre><code class="language-js">const ListFilterChildFunction = props =&gt; {
+    const { list, query, children } = props
+    
+    const filteredList = list.filter(row =&gt;
+        Object.values(row).join(' ').includes(query))
+    
+    return children(filteredList)
+}
+</code></pre>
+<p>Use is also only slightly different.</p>
+<pre><code class="language-jsx">&lt;h1&gt;Children as function:&lt;/h1&gt;
+&lt;ListFilterChildFunction
+    list={this.state.list} query={this.state.query}
+&gt;
+    {
+        filtered =&gt; (
+            &lt;Table headers={this.state.headers} list={filtered} /&gt;
+        )
+    }
+&lt;/ListFilterChildFunction&gt;
+</code></pre>
+<p>By that logic it is possible to use any prop to achieve the same effect. <code>render</code> and <code>children</code> are used as a convention. Here is a render prop pattern using <code>foo</code> prop.</p>
+<pre><code class="language-js">const ListFilterFooProp = props =&gt; {
+    const { list, query, foo } = props
+    
+    const filteredList = list.filter(row =&gt;
+        Object.values(row).join(' ').includes(query))
+    
+    return foo(filteredList)
+}
+</code></pre>
+<pre><code class="language-jsx">&lt;h1&gt;Foo Prop:&lt;/h1&gt;
+&lt;ListFilterFooProp
+    list={this.state.list} query={this.state.query}
+    foo={
+        filtered =&gt; (
+            &lt;Table headers={this.state.headers} list={filtered} /&gt;
+        )
+    }
+/&gt;
+</code></pre>
+<p>Here's how it looks in React DevTools:</p>
+<pre><code class="language-jsx">&lt;ListFilterRenderProp query=&quot;&quot;&gt;
+    &lt;Table&gt;...&lt;/Table&gt;
+&lt;/ListFilterRenderProp&gt;
+</code></pre>
+<h2 id="higher-order-component">Higher Order Component</h2>
+<p>HOCs are used to achieve the same goal and are an older pattern. The same filtering can be done this way.</p>
+<pre><code class="language-js">const withFilter = Component =&gt; {
+  return ({ list, query, ...rest }) =&gt; {
+    const filteredList = list.filter(row =&gt; Object.values(row).join(' ').includes(query))
+    return &lt;Component {...rest} list={ filteredList } /&gt;
+  }
+}
+const FilteredTable = withFilter(Table)
+</code></pre>
+<p><code>withFilter</code> returns a wrapped component with <code>filteredList</code> in its scope. Props must be passed explicitly to the wrapped component. To use the HOC I need to create the wrapped component first by passing <code>Table</code> to <code>withFilter</code> and save the returned component in a variable.</p>
+<p>I can be then used like this.</p>
+<pre><code class="language-jsx">&lt;h1&gt;HOC wrapper:&lt;/h1&gt;
+&lt;FilteredTable list={this.state.list} query={this.state.query} headers={this.state.headers} /&gt;
+</code></pre>
+<p><code>query</code> and <code>list</code> are consumed in the HOC, <code>headers</code> are passed down to the <code>Table</code>. Components need to be wrapped before use which makes this pattern slightly less convenient than RP but adds readability and forces separation.</p>
+<p>This is how it looks in React DevTools:</p>
+<pre><code class="language-jsx">&lt;Unknown query=&quot;&quot;&gt;
+    &lt;Table&gt;...&lt;/Table&gt;
+&lt;/Unknown&gt;
+</code></pre>
+<p>This is because wrapper element doesn't have a display name. It is enough to store the component in a variable to give it its name.</p>
+<pre><code class="language-js">const withFilter = Component =&gt; {
+  const ListFilter = ({ list, query, ...rest }) =&gt; {
+    const filteredList = list.filter(row =&gt; Object.values(row).join(' ').includes(query))
+    return &lt;Component {...rest} list={ filteredList } /&gt;
+  }
+  return ListFilter
+}
+</code></pre>
+<pre><code class="language-jsx">&lt;ListFilter query=&quot;&quot;&gt;
+    &lt;Table&gt;...&lt;/Table&gt;
+&lt;/ListFilter&gt;
+</code></pre>
+<p>Additionally its possible to set up a dynamic name for the wrapper. Conventionally HOC returned components have names of the expression that returned them.</p>
+<pre><code class="language-js">const withFilter = Component =&gt; {
+    const ListFilter = ({ list, query, ...rest }) =&gt; {
+        const filteredList = list.filter(row =&gt;
+            Object.values(row).join(' ').includes(query))
+        return &lt;Component {...rest} list={ filteredList } /&gt;
+    }
+    ListFilter.displayName = `withFilter(${Component.displayName || Component.name})`
+    return ListFilter
+}
+</code></pre>
+<pre><code class="language-xml">&lt;withFilter(Table) query=&quot;&quot;&gt;
+    &lt;Table&gt;...&lt;/Table&gt;
+&lt;/withFilter(Table)&gt;
+</code></pre>
+
+    </main>
+
+    <footer>
+      <ul>
+        <li><a href="https://github.com/adambuczek"><img src="/assets/github.svg" alt="Github"></a></li>
+      </ul>
+    </footer>
+    <link href="/assets/styles/global.css" rel="stylesheet" type="text/css">
+    <link href="/assets/styles/print.css" media="print" rel="stylesheet" type="text/css">
+  </body>
+</html>
+

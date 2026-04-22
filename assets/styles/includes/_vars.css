@@ -1,0 +1,8 @@
+:root {
+  --primary-text-color: black;
+  --link-color: auto;
+  --bg-color: white;
+  --accent: linear-gradient(90deg, #9e009e 0%, #ff007f 49%, #d98400 100%);
+  --step: 0.5rem;
+}
+

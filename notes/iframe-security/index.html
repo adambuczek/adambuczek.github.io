@@ -1,0 +1,131 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="/assets/styles/critical.css" rel="stylesheet" type="text/css">
+    <title>Adam Buczek | Iframe Security</title>
+    <meta name="description" content="An illustration of how an embedded site can access the opener context.">
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Adam Buczek</a></li>
+        |
+        <li><a href="/notes">Notes</a></li>
+      </ul>
+    </nav>
+
+    <main role="main" class="page--note">
+      
+      <h1>Iframe Security</h1>
+      <p>You have no control over sites that provide their functionality via embedded frames. 3rd party providers who offer their functionality for free usually gather user data to be sold to ad providers as a form of <em>payment</em>.</p>
+<h2 id="cross-origin-frames">Cross-origin Frames</h2>
+<p>Modern browsers are non susceptible to cross-origin <code>iframes</code> tampering with embedding website.</p>
+<p>This cross-origin frame doesn't have access to <code>top</code> frame which is the current website:</p>
+<blockquote>
+<p>Cross-origin frames may stop working at some point. Source used can be found at the <a href="#cross-origin-frame-source">bottom of this page</a>.</p>
+</blockquote>
+<!-- raw HTML omitted -->
+<p>Opening this frame with provided button will show that it does have access to <code>opener</code> which is the <code>iframe</code> itself but it still can't access <code>opener.top</code>. Trying to change location of <code>opener.top</code> in newly opened window will produce an error. This fact prevents changing location of original site in the background which could be used in a phishing attack.</p>
+<h2 id="same-origin-frames">Same-origin Frames</h2>
+<p>For comparison same-origin <code>iframe</code> below (identical to the one above) has access to <code>top</code>. Widow opened with provided button has access to <code>opener.top</code> and can change location of <code>top</code> frame of its <code>opener</code>. Clicking the button in newly opened window will change location of current site to example.com.</p>
+<!-- raw HTML omitted -->
+<h2 id="sandboxing">Sandboxing</h2>
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#attr-sandbox"><code>sandbox</code></a> attribute allows for extra restrictions. Empty attribute will apply all restrictions.</p>
+<h3 id="same-origin-sandboxing">Same-origin Sandboxing</h3>
+<p>In this case same-origin sandboxed frame without <code>allow-same-origin</code> always fails SOP checks. This will also disable to <code>opener</code> in window opened in new tab.</p>
+<!-- raw HTML omitted -->
+<p>Removing <code>allow-popups</code> will disable opening new windows and tabs.</p>
+<!-- raw HTML omitted -->
+<p>Removing <code>allow-scripts</code> disables all JavaScript but not popups. <code>target=&quot;_blank&quot;</code> anchor will work, opened window will inherit script restriction. In this case frame will be mostly empty.</p>
+<!-- raw HTML omitted -->
+<p>Adding <code>allow-popups-to-escape-sandbox</code> to the last case will allow script execution and <code>opener.top</code> access.</p>
+<!-- raw HTML omitted -->
+<h3 id="cross-origin-sandboxing">Cross-origin Sandboxing</h3>
+<p>Omitting <code>allow-same-origin</code> on cross-origin <code>iframe</code> blocks <code>opener</code> in popups.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h3 id="cross-origin-frame-source">Cross origin frame source</h3>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a href=&quot;&quot; target=&quot;_blank&quot;&gt;open this frame in blank target&lt;/a&gt;
+  &lt;ul id=&quot;log&quot;&gt;&lt;/ul&gt;
+  &lt;script type=&quot;text/javascript&quot;&gt;
+
+    const logEl = document.getElementById('log')
+    const log = (...messages) =&gt; {
+      const messageEl = document.createElement('li')
+      messageEl.style.display = 'flex'
+      messageEl.style.borderTop = '1px solid black'
+      messageEl.style.padding = '1rem 0'
+      const spans = messages.map(message =&gt; {
+        const span = document.createElement('span')
+        span.style.flex = `${100 / messages.length}%`
+        span.textContent = message
+        messageEl.append(span)
+      })
+      logEl.append(messageEl)
+    }
+    logEl.style.padding = 0
+    logEl.style.margin = 0
+
+    const tryToReadWidowProp = str =&gt; {
+      try {
+        const path = str.split('.')
+        result = path.reduce((a, c) =&gt; a[c], window)
+      } catch (error) {
+        result = error.message
+      } finally {
+        return result
+      }
+    }
+
+    const locationHref = tryToReadWidowProp('location.href')
+    const topLocationHref = tryToReadWidowProp('top.location.href')
+
+    log('window location:', locationHref)
+    log('top location:', topLocationHref)
+    log('opener location:', tryToReadWidowProp('opener.location.href'))
+    log('opener top location:', tryToReadWidowProp('opener.top.location.href'))
+
+    if (!(locationHref === topLocationHref)) {
+      const button = document.createElement('button')
+      button.textContent = 'open this frame in a blank target'
+      button.addEventListener('click', () =&gt; window.open(window.location.href, '_blank'))
+      document.body.append(button)
+    }
+
+    if (window.opener) {
+      const button = document.createElement('button')
+      button.textContent = 'navigate top frame of opener to example.com'
+      button.addEventListener('click', () =&gt; opener.top.location.href = '//example.com')
+      document.body.append(button)
+    }
+
+  &lt;/script&gt;  
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+    </main>
+
+    <footer>
+      <ul>
+        <li><a href="https://github.com/adambuczek"><img src="/assets/github.svg" alt="Github"></a></li>
+      </ul>
+    </footer>
+    <link href="/assets/styles/global.css" rel="stylesheet" type="text/css">
+    <link href="/assets/styles/print.css" media="print" rel="stylesheet" type="text/css">
+  </body>
+</html>
+

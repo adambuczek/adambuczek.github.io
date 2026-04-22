@@ -1,0 +1,106 @@
+/* Print stylesheet — overrides screen styles */
+/* Modular scale: 7px base / 16px root = 0.4375rem per step */
+:root {
+  --step: 0.4375rem;
+}
+
+h1, h2, h3, h4, h5, strong, em, p code,
+h1 span, h2 span, h3 span, h4 span, h5 span {
+  background: transparent;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+}
+
+html {
+  font-size: 14px; /* 7px base * 2 */
+}
+
+section {
+  padding: calc(1 * var(--step)) 0 0 0;
+}
+
+nav, footer {
+  display: none;
+}
+
+blockquote, iframe, ol, p, ul, hgroup {
+  margin: 0 0 calc(1 * var(--step));
+}
+
+hr {
+  margin: calc(1 * var(--step)) 0;
+  opacity: .5;
+}
+
+main {
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
+
+@page {
+  margin: 1.5cm;
+}
+
+hgroup {
+  page-break-inside: avoid;
+}
+
+h1, h2, h3 {
+  page-break-after: never;
+}
+
+h1 {
+  margin: 0 0 calc(4 * var(--step)) 0;
+  font-size: calc(6 * var(--step));
+}
+
+h2 {
+  margin: calc(2 * var(--step)) 0;
+  font-size: calc(4 * var(--step));
+}
+
+h3 {
+  margin: calc(2 * var(--step)) 0;
+  font-weight: bolder;
+  font-size: calc(3 * var(--step));
+}
+
+h4 {
+  margin: 0;
+  font-weight: normal;
+  font-style: italic;
+  font-size: calc(3 * var(--step));
+}
+
+h5 {
+  font-weight: lighter;
+  margin: 0;
+  font-size: calc(3 * var(--step));
+}
+
+p {
+  margin: calc(2 * var(--step)) 0 calc(4 * var(--step));
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+hr {
+  border-color: transparent;
+}
+
+.page--index ul::after {
+  content: "";
+  flex: auto;
+}
+
+.page--index ul li {
+  flex: 0 0 25% !important;
+}

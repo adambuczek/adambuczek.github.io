@@ -1,0 +1,104 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="/assets/styles/critical.css" rel="stylesheet" type="text/css">
+    <title>Adam Buczek | CSS Centering</title>
+    <meta name="description" content="A collection of ways of XY centering content with CSS. This task was given to me during a job interview.">
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Adam Buczek</a></li>
+        |
+        <li><a href="/notes">Notes</a></li>
+      </ul>
+    </nav>
+
+    <main role="main" class="page--note">
+      
+      <h1>CSS Centering</h1>
+      <h2 id="outdated-table-cell-centering">Outdated: Table cell centering</h2>
+<p>Requires another wrapper if the <code>table-cell</code> wrapper needs to be centered too. Table cell needs explicit dimensions.</p>
+<pre><code class="language-html">&lt;div class=&quot;wrapper&quot;&gt;
+  &lt;div class=&quot;table-cell&quot;&gt;
+    &lt;div class=&quot;red-box unknown-dimensions&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-css">.table-cell {
+  width: 400px;
+  height: 400px;
+  display: table-cell;
+  vertical-align: middle
+}
+
+.table-cell .red-box {
+  margin: auto;
+}
+</code></pre>
+<h2 id="outdated-absolute-position-with-negative-margin">Outdated: Absolute position with negative margin</h2>
+<p>Centered child dimensions need to be known.</p>
+<pre><code class="language-html">&lt;div class=&quot;wrapper&quot;&gt;
+  &lt;div class=&quot;red-box absolute known-dimensions&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-css">.wrapper {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.known-dimensions {
+  width: 100px;
+  height: 100px;
+}
+
+.absolute.known-dimensions {
+  margin-top: -50px;
+  margin-left: -50px;
+}
+</code></pre>
+<h2 id="absolute-position">Absolute position</h2>
+<p>Useful for supporting IE 9-11 and when wrapping element can't be flex or inline-flex for some reason.
+Can be used on multiple children (they overlap).</p>
+<pre><code class="language-html">&lt;div class=&quot;wrapper&quot;&gt;
+  &lt;div class=&quot;red-box absolute unknown-dimensions&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>With styles above.</p>
+<pre><code class="language-css">.absolute.unknown-dimensions {
+  transform: translate(-50%, -50%);
+}
+</code></pre>
+<h2 id="flexbox-centering">Flexbox centering</h2>
+<pre><code class="language-html">&lt;div class=&quot;wrapper flex&quot;&gt;
+  &lt;div class=&quot;red-box unknown-dimensions&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-css">.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</code></pre>
+
+    </main>
+
+    <footer>
+      <ul>
+        <li><a href="https://github.com/adambuczek"><img src="/assets/github.svg" alt="Github"></a></li>
+      </ul>
+    </footer>
+    <link href="/assets/styles/global.css" rel="stylesheet" type="text/css">
+    <link href="/assets/styles/print.css" media="print" rel="stylesheet" type="text/css">
+  </body>
+</html>
+

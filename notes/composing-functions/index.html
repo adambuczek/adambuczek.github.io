@@ -1,0 +1,120 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="/assets/styles/critical.css" rel="stylesheet" type="text/css">
+    <title>Adam Buczek | Composing Functions</title>
+    <meta name="description" content="Short writeup on how to implement a function composing multiple functions. This task was given to me during a job interview.">
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Adam Buczek</a></li>
+        |
+        <li><a href="/notes">Notes</a></li>
+      </ul>
+    </nav>
+
+    <main role="main" class="page--note">
+      
+      <h1>Composing Functions</h1>
+      <p>Take any number of functions and return one that will be applied to passed arguments from right to left. Given functions <code>a, b, c</code> this:</p>
+<pre><code class="language-js">const abc = compose(a, b, c)
+abc(1,2)
+</code></pre>
+<p>Is a more readable equivalent of:</p>
+<pre><code class="language-js">a(b(c(1,2)))
+</code></pre>
+<h2 id="tests-mocha--chai">Tests (mocha + chai)</h2>
+<p>I wrote a few simple functions operating on numbers:</p>
+<pre><code class="language-js">const add5 = augend =&gt; augend + 5
+const mult2 = multiplier =&gt; multiplier * 2
+const sum = (...summands) =&gt; summands.reduce((a, c) =&gt; a + c)
+const pow = (base, exponent) =&gt; base**exponent
+</code></pre>
+<ul>
+<li>composing 3 functions</li>
+<li>1 function, which returns early only calling the single function</li>
+<li>and 0 function variant which returns a function returning first passed argument</li>
+</ul>
+<pre><code class="language-js">describe('composing functions', () =&gt; {
+    it('return the same value as 3 funcs', () =&gt; {
+        const data = [1, 2, 3, 4, 5] 
+        expect(compose(add5, mult2, sum)(...data))
+            .to.equal(add5(mult2(sum(...data))))
+    })
+    it('return the same value as 1 fn', () =&gt; {
+        const data = [1, 2, 3, 4, 5] 
+        expect(compose(sum)(data)).to.equal(sum(data))
+        expect(compose(pow)(2,4)).to.equal(pow(2,4))
+    })
+    it('return 1st argument given 0 fns', () =&gt; {
+        expect(compose()('whatever', 1)).to.equal('whatever')
+    })
+})
+</code></pre>
+<h2 id="first-implementation">First implementation</h2>
+<p>When passed more than 1 function it returns a function that:</p>
+<ul>
+<li>reverses the function array to apply functions <code>a(b(c(1,2)))</code> and not <code>c(b(a(1,2)))</code></li>
+<li>maps functions array saving intermediate return values in an array</li>
+<li>needs to be 'unpacked' before returning (<code>.pop()[0]</code>)</li>
+</ul>
+<pre><code class="language-js">const compose = (...funcs) =&gt; {
+    if (!funcs.length) return (...args) =&gt; args[0]
+    if (funcs.length === 1) return (...args) =&gt; funcs[0](...args)
+    return (...args) =&gt; {
+        let tempArgs = args
+        return funcs.reverse().map(fn =&gt; {
+            tempArgs = [fn(...tempArgs)]
+            return tempArgs
+        }).pop()[0]
+    }
+}
+</code></pre>
+<p>Saving intermediate values and returning only the accumulated, final value can be done easier using <code>reduce</code>.</p>
+<h2 id="reduceright-implementation">ReduceRight implementation</h2>
+<p>Reversing the <code>funcs</code> array can be avoided with <code>reduceRight</code> processing an array from back to front.</p>
+<p>Being able to compose functions accepting multiple arguments up front means operating on argument arrays. Call to the rightmost (1st) function uses spread operator <code>fn(...acc)</code>.</p>
+<p>When <code>initialValue</code> is omitted <code>reduceRight</code> passes two last functions on first loop and starts from penultimate element (<code>funcs.length - 2</code>). First iteration applies both functions and spreads initial arguments.</p>
+<pre><code class="language-js">const compose = (...funcs) =&gt; {
+    if (!funcs.length) return (...args) =&gt; args[0]
+    if (funcs.length === 1) return (...args) =&gt; funcs[0](...args)
+    return (...args) =&gt; {
+        return funcs.reduceRight((a, b, i) =&gt;
+            (i === funcs.length - 2) ? b(a(...args)) : b(a))
+    }
+}
+</code></pre>
+<h2 id="redux-implementation">Redux implementation</h2>
+<p>Reduces <code>funcs</code> array and accumulates functions wrapping each new function in those already iterated over effectively reversing the calling order.</p>
+<p>It also shows that spreading an array to return its first element <code>(...args) =&gt; args[0]</code> is redundant when <code>arg =&gt; arg</code> discards all arguments but the first one.</p>
+<p>Wrapping single function and passing it its own argument should also be simplified <code>(...args) =&gt; funcs[0](...args)</code> to <code>funcs[0]</code>.</p>
+<pre><code class="language-js">export default function compose(...funcs) {
+  if (funcs.length === 0) {
+    return arg =&gt; arg
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0]
+  }
+
+  return funcs.reduce((a, b) =&gt; (...args) =&gt; a(b(...args)))
+}
+</code></pre>
+
+    </main>
+
+    <footer>
+      <ul>
+        <li><a href="https://github.com/adambuczek"><img src="/assets/github.svg" alt="Github"></a></li>
+      </ul>
+    </footer>
+    <link href="/assets/styles/global.css" rel="stylesheet" type="text/css">
+    <link href="/assets/styles/print.css" media="print" rel="stylesheet" type="text/css">
+  </body>
+</html>
+

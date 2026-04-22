@@ -1,0 +1,159 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="/assets/styles/critical.css" rel="stylesheet" type="text/css">
+    <title>Adam Buczek | Async component library with Vue</title>
+    <meta name="description" content="Creating a Vue component library with multiple output files without ejecting Vue CLI setup.">
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Adam Buczek</a></li>
+        |
+        <li><a href="/notes">Notes</a></li>
+      </ul>
+    </nav>
+
+    <main role="main" class="page--note">
+      
+      <span><strong>DRAFT</strong></span>
+      
+      <h1>Async component library with Vue</h1>
+      <p>This is the first element of <a href="../vue-website-builder">Vue based website builder</a> — a component library, source of <em>Modules</em> that can be loaded at runtime via HTTP when they are needed.</p>
+<p>As stated earlier <a href="../vue-website-builder/#basic-assumptions">Component Libraries must adhere to a standard</a>. Lifecycle of a component looks like this:</p>
+<ul>
+<li>All accessible components are listed in the UI.</li>
+<li>A component is chosen from the list and added to a main area.</li>
+<li>Component's content can be edited; components can be rearranged.</li>
+</ul>
+<p>To sum up — components must be listable, addable and editable in a standardized way. Here is how I have done it.</p>
+<blockquote>
+<p>An example library is available in <a href="https://github.com/adambuczek/example-vue-component-library">adambuczek/example-vue-component-library</a>.</p>
+</blockquote>
+<h2 id="standardization-and-metadataa-namestandardization-and-metadataa">Standardization and metadata<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<p>To be referenced from the outside, each component needs an additional set of data attached to it. The data from all the components is later combined into library manifest listing all available <em>Modules</em>.</p>
+<p>I decided on <code>manifest.json</code> file per component:</p>
+<pre><code class="language-json">{
+  &quot;displayName&quot;: &quot;Page Title&quot;,
+  &quot;name&quot;: &quot;page-title&quot;,
+  &quot;img&quot;: &quot;thumb.png&quot;,
+  &quot;props&quot;: [ &quot;text&quot; ]
+}
+</code></pre>
+<p>These files serve as a source of truth about each <em>Module</em> and are accessible from anywhere. They are also used in the components' <code>&lt;script&gt;</code>:</p>
+<pre><code class="language-js">import { name, props } from './manifest.json'
+
+export default {
+  name,
+  props
+}
+</code></pre>
+<p>This way the manifest alone provides almost all of the data needed to work with the <em>Module</em>. It doesn't contain the component itself but provides a way to access it.</p>
+<p>Listable — <code>img</code> and <code>displayName</code> are mainly cosmetic and informational, and also represent the component in a user-friendly way.</p>
+<p>Addable — <code>name</code> is what Vue sees internally and must always be hyphenated according to <a href="https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-core-concepts">Custom Element</a> spec and <a href="https://vuejs.org/v2/style-guide/#Multi-word-component-names-essential">Vue style guide</a>.</p>
+<p>Editable — <code>props</code> list is used to create control elements that can inject the content into the component. I will talk about it in the next post.</p>
+<p>Example standardized components looks like this in the directory tree:</p>
+<pre><code class="language-bash">src
+├── components
+│   ├── CaptionedImage
+│   │   ├── index.vue
+│   │   ├── manifest.json
+│   │   └── thumb.png
+│   ├── PageTitle
+│   │   ├── index.vue
+│   │   ├── manifest.json
+│   │   └── thumb.png
+│   └── ThreeColumnText
+│       ├── index.vue
+│       ├── manifest.json
+│       └── thumb.png
+</code></pre>
+<p>Those are very simple but they can have any functionality a Vue 2 application can.</p>
+<h2 id="build-process">Build process</h2>
+<p>Build process happens in 2 steps:</p>
+<h3 id="manifest">Manifest</h3>
+<p>All components' manifests are gathered and joined into a single <code>manifest.json</code>. I used <a href="https://www.npmjs.com/package/fast-glob">fast-glob</a> to find all manifests.</p>
+<p>This step also takes care of copying component images to the output directory.</p>
+<p>Full <code>create-manifest.js</code> script is <a href="https://github.com/adambuczek/example-vue-component-library/blob/master/scripts/create-manifest.js">here</a>.</p>
+<h3 id="build">Build</h3>
+<p>Vue CLI config doesn't allow for multiple entry/output pairs. I wanted to build components separately to be able to request them independently at runtime. Build process uses generated <code>manifest.json</code> to identify entry files. This step also fills the manifest file with paths to compiled files relative to the manifest itself.</p>
+<p>My solution is based on <a href="https://markus.oberlehner.net/blog/distributed-vue-applications-loading-components-via-http/">Markus Oberlehner's article</a>. He describes how to use Vue CLI to build a single component.</p>
+<pre><code class="language-bash">vue-cli-service build --target lib \
+  --formats umd-min --no-clean \
+  --dest outputDir --name componentName inputFilePath
+</code></pre>
+<p>Based on this I created a script that uses the data from the manifest file to trigger building multiple components in parallel. Full <code>build.js</code> script is <a href="https://github.com/adambuczek/example-vue-component-library/blob/master/scripts/build.js">here</a>.</p>
+<p>Components in UMD format are exposed as global variables when executed in a browser, as long as Vue also is a global variable. <a href="https://markus.oberlehner.net/blog/distributed-vue-applications-loading-components-via-http/">Markus</a> provides a pattern that leverages this property and I will <a href="../building-vue-apps-in-vue-app/">use it in the UI to register components</a>.</p>
+<p>The manifest looks like this after the build step:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;example-vue-component-library&quot;,
+  &quot;version&quot;: &quot;0.1.0&quot;,
+  &quot;components&quot;: [
+    {
+      &quot;displayName&quot;: &quot;Captioned Image&quot;,
+      &quot;name&quot;: &quot;captioned-image&quot;,
+      &quot;img&quot;: &quot;captioned-image-thumb.png&quot;,
+      &quot;props&quot;: [
+        &quot;url&quot;,
+        &quot;alt&quot;,
+        &quot;caption&quot;
+      ],
+      &quot;src&quot;: &quot;src/components/CaptionedImage/index.vue&quot;,
+      &quot;style&quot;: &quot;captioned-image.css&quot;,
+      &quot;script&quot;: &quot;captioned-image.umd.min.js&quot;,
+      &quot;map&quot;: &quot;captioned-image.umd.min.js.map&quot;
+    },
+    {
+      &quot;displayName&quot;: &quot;Page Title&quot;,
+      &quot;name&quot;: &quot;page-title&quot;,
+      &quot;img&quot;: &quot;page-title-thumb.png&quot;,
+      &quot;props&quot;: [
+        &quot;text&quot;
+      ],
+      &quot;src&quot;: &quot;src/components/PageTitle/index.vue&quot;,
+      &quot;style&quot;: &quot;page-title.css&quot;,
+      &quot;script&quot;: &quot;page-title.umd.min.js&quot;,
+      &quot;map&quot;: &quot;page-title.umd.min.js.map&quot;
+    },
+    {
+      &quot;displayName&quot;: &quot;Three Column Text&quot;,
+      &quot;name&quot;: &quot;three-column-text&quot;,
+      &quot;img&quot;: &quot;three-column-text-thumb.png&quot;,
+      &quot;props&quot;: [
+        &quot;text&quot;
+      ],
+      &quot;src&quot;: &quot;src/components/ThreeColumnText/index.vue&quot;,
+      &quot;style&quot;: &quot;three-column-text.css&quot;,
+      &quot;script&quot;: &quot;three-column-text.umd.min.js&quot;,
+      &quot;map&quot;: &quot;three-column-text.umd.min.js.map&quot;
+    }
+  ]
+}
+</code></pre>
+<p>This is an actual entry point of this component library. This is a set of data that can fetch and use any component built here.</p>
+<h2 id="components-server">Components server</h2>
+<p>For development a simple static files server will suffice. I am using <code>http-serve</code> via <code>npx</code>. It is defined in <code>package.json</code> as <code>serve-dist</code>:</p>
+<pre><code class="language-bash">npx http-serve --cors dist -p 8888
+</code></pre>
+<p>This serves dist directory on port 8888 with loose cors settings — in case the client app runs on a custom domain.</p>
+<h2 id="summary">Summary</h2>
+<p>Vue CLI via the power of UMD gives us a way of building independent Vue components. Right now its only a command line option but hopefully it is going to <a href="https://github.com/vuejs/vue-cli/issues/3922">change in the future</a>.</p>
+<p>Apart from that Vue CLI configuration is very extensible and so is Vue Single File Components syntax. There is an example component library <a href="https://github.com/chrisvfritz/hello-vue-components">Hello Vue Components</a> authored by Chris Fritz which illustrates a case where additional metadata is kept inside vue files. This idea is certainly worth exploring.</p>
+<p>In the next part I will build an example app that uses the components created here straight from a static files server.</p>
+
+    </main>
+
+    <footer>
+      <ul>
+        <li><a href="https://github.com/adambuczek"><img src="/assets/github.svg" alt="Github"></a></li>
+      </ul>
+    </footer>
+    <link href="/assets/styles/global.css" rel="stylesheet" type="text/css">
+    <link href="/assets/styles/print.css" media="print" rel="stylesheet" type="text/css">
+  </body>
+</html>
+

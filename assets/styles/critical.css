@@ -1,0 +1,154 @@
+@import 'includes/_vars.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+  font-size: calc(2 * var(--step));
+  line-height: calc(3 * var(--step));
+}
+
+nav {
+  margin: calc(2 * var(--step)) 5%;
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: inline;
+    margin: 0 1rem;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  @media screen and (min-width: 670px) {
+    margin-left: calc(2 * var(--step));
+  }
+}
+
+main {
+  width: 90%;
+  max-width: 720px;
+  margin: calc(6 * var(--step)) auto;
+}
+
+h1, h2, h3, h4, h5, strong, em, p code, li code,
+h1 span, h2 span, h3 span, h4 span, h5 span {
+  background: var(--accent);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: sans-serif;
+  font-weight: 400;
+}
+
+h1 {
+  margin: calc(4 * var(--step)) 0 calc(3 * var(--step));
+  font-size: calc(5 * var(--step));
+  line-height: calc(6 * var(--step));
+  font-weight: 300;
+}
+
+h2 {
+  margin: calc(4 * var(--step)) 0 calc(2 * var(--step));
+  font-size: calc(4 * var(--step));
+  line-height: calc(5 * var(--step));
+  font-weight: 400;
+}
+
+h3 {
+  margin: calc(2 * var(--step)) 0 calc(1 * var(--step));
+  font-size: calc(3 * var(--step));
+  line-height: calc(4 * var(--step));
+  font-weight: 500;
+}
+
+h4 {
+  margin: calc(1 * var(--step)) 0;
+  font-size: calc(2 * var(--step));
+  line-height: calc(3 * var(--step));
+  font-weight: 500;
+}
+
+h5 {
+  margin: calc(1 * var(--step)) 0;
+  font-size: calc(2 * var(--step));
+  line-height: calc(3 * var(--step));
+  font-weight: 400;
+}
+
+p, ul, ol, iframe, blockquote {
+  margin: calc(2 * var(--step)) 0;
+  font-size: calc(2 * var(--step));
+  line-height: calc(3 * var(--step));
+
+  code {
+    /* prevent inline code blocks from messing up the baseline grid */
+    line-height: calc(1 * var(--step));
+  }
+}
+
+ul, ol {
+  padding: 0 0 0 calc(3 * var(--step));
+}
+
+footer img {
+  height: 24px;
+}
+
+section {
+  padding: calc(2 * var(--step)) 0;
+}
+
+hr {
+  margin: calc(4 * var(--step)) 0;
+}
+
+sup.footnote-ref {
+  font-size: calc(2 * var(--step));
+  /* prevent footnotes from messing up the baseline grid */
+  line-height: calc(1 * var(--step));
+}
+
+blockquote {
+  border-left: 6px rgba(1,1,1,.05) solid;
+  background-color: rgba(1,1,1,.05);
+  padding-left: calc(2 * var(--step));
+  padding-right: calc(1 * var(--step));
+  padding-top: calc(1 * var(--step));
+  padding-bottom: calc(1 * var(--step));
+}
+
+dt {
+  font-weight: normal;
+  margin-top: calc(2 * var(--step));
+}
+
+dd {
+  margin-bottom: calc(2 * var(--step));
+  margin-left: calc(2 * var(--step));
+}
+
+.no-margin-group, .no-margin-group + p {
+  margin: 0;
+}
+ 
+.no-margin-group + p + h4 {
+  margin-top: 0;
+}
+
+
