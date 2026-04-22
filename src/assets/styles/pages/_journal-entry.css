@@ -1,0 +1,4 @@
+.journal-entry--date {
+  font-size: 90%;
+  line-height: calc(2 * var(--step));
+}

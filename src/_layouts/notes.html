@@ -1,0 +1,17 @@
+{{template "head" .}}
+    <main role="main" class="page--journal">
+      <h1>{{.Meta.Title}}</h1>
+      <ul>
+        {{range sortByDateDescInPlace (index .Collections "note")}}
+          {{if .Meta.Published}}
+            <li>
+              <div class="clearfix">
+                <a class="float-left entry-link" href="{{.URL}}">{{.Meta.Title}}</a>
+              </div>
+              <p class="mt-0">{{.Meta.Excerpt}}</p>
+            </li>
+          {{end}}
+        {{end}}
+      </ul>
+    </main>
+{{template "foot" .}}

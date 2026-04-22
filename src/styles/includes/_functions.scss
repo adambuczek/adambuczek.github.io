@@ -1,4 +1,0 @@
-@function to-rem($value, $base: 16) {
-  @return #{$value/$base}rem;
-}
-

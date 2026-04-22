@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+      - name: Instal go-ssg
+        run: go install github.com/adambuczek/go-ssg@latest
+      - name: Build
+        run: go-ssg
+      - name: Add CNAME
+        run: echo "adambuczek.com" > dist/CNAME
+      - name: Deploy
+        uses: paceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

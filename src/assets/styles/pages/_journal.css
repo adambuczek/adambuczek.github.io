@@ -1,0 +1,30 @@
+.page--journal ul {
+  padding: 0;
+  list-style: none;
+  overflow-x: hidden;
+  position: relative;
+
+  line-height: calc(6 * var(--step));
+
+  a,
+  span {
+    background-color: var(--bg-color);
+  }
+
+  li {
+    margin-bottom: calc(4 * var(--step));
+  }
+
+  span {
+    margin-left: 1rem;
+  }
+
+  span::before {
+    right: 0;
+    background-color: var(--bg-color);
+  }
+
+  a::after {
+    left: 0;
+  }
+}

@@ -1,0 +1,9 @@
+{{template "head" .}}
+    <main role="main" class="page--note">
+      {{if not .Meta.Published}}
+      <span><strong>DRAFT</strong></span>
+      {{end}}
+      <h1>{{.Meta.Title}}</h1>
+      {{.Body}}
+    </main>
+{{template "foot" .}}

@@ -1,0 +1,35 @@
+@import 'includes/_vars.css';
+@import 'includes/_footer.css';
+@import 'includes/_utility-classes.css';
+@import 'pages/_index.css';
+@import 'pages/_journal.css';
+@import 'pages/_journal-entry.css';
+@import 'includes/_prism-theme.overrides.css';
+/* @import 'includes/_debug.css'; */
+
+body {
+  background-color: var(--bg-color);
+  color: var(--primary-text-color);
+}
+
+a {
+  color: var(--link-color);
+}
+
+:not(pre) > code {
+  font-family: monospace;
+  word-wrap: break-word;
+}
+
+img {
+  max-width: 100%;
+}
+
+ul {
+  list-style: square;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #b3b3b3; /* lighten(black, 70) */
+}
